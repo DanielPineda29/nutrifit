@@ -1,0 +1,127 @@
+from pymongo import MongoClient
+import Backend.GlobalInfo.Keys as Keys
+import Backend.GlobalInfo.ResponseMessages as ResponseMessages
+from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask import jsonify
+
+# Connection to database
+if Keys.dbconn == None:
+    mongoConnect = MongoClient(Keys.strConnection)
+    Keys.dbconn = mongoConnect[Keys.strDBConnection]
+    dbConnectUsers = Keys.dbconn["users"]
+    dbConnectRecipes = Keys.dbconn["recipes"]
+    dbConnectExcercises = Keys.dbconn["excercises"]
+    dbConnectRoutines = Keys.dbconn["routines"]
+    dbConnectFavRecipes = Keys.dbconn["favRecipes"]
+    print("dbConnectUsers: ", dbConnectUsers)
+
+
+#####################################################################################
+#
+#                               Función CREATE 
+#
+######################################################################################
+
+def fnRegisterUser(data):
+    print("\n==============================|fnRegisterUser|==============================\n")
+    try:
+        print("DATA => ", data)
+        hashed_password = generate_password_hash(data['strPassword'])
+        objCreateUser = dbConnectUsers.insert_one({
+            "strEmail": data["strEmail"],
+            "strPassword": hashed_password,
+            "strName": data["strName"], 
+            "strLastname": data["strLastname"],
+            "numAge": data["numAge"],
+            "numHeight": data["numHeight"],
+            "strSexo": data["strSexo"],
+            "numWeight": data["numWeight"],
+            "strActivity": data["strActivity"],
+            })
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnRegisterUser: ", e)
+        return jsonify(ResponseMessages.err500)
+
+    
+#####################################################################################
+#
+#                               Funciones GET 
+#
+######################################################################################
+
+def fnGetUser(objIDParameter):
+    print("\n==============================|fnGetUser|==============================\n")
+    try:
+        print("ID => ", objIDParameter)
+        objFindUser = dbConnectUsers.find_one({'_id':ObjectId(objIDParameter)})
+        print("DATA => ", objFindUser)
+        objResponse = ResponseMessages.succ200.copy()
+        objResponse = objFindUser
+        return objResponse
+    except Exception as e:
+        print("\nError en fnGetUser: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+def fnGetRecipes():
+    print("\n==============================|fnGetRecipes|==============================\n")
+    try:
+        objFindRecipes = dbConnectRecipes.find({})
+        print("DATA => ", objFindRecipes)
+        objResponse = ResponseMessages.succ200.copy()
+        objResponse = objFindRecipes
+        return objResponse
+    except Exception as e:
+        print("\nError en fnGetUsers: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+
+#####################################################################################
+#
+#                               Función UPDATE 
+#
+######################################################################################
+
+def fnUpdateUser(objIDParameter, data):
+    print("\n==============================|fnUpdateUser|==============================\n")
+    try:
+        print("ID => ", objIDParameter)
+        print("DATA => ", data)
+        hashed_password = generate_password_hash(data['strPassword'])
+        objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
+                                                   {"$set":{
+                                                       "strEmail": data["strEmail"],
+                                                        "strPassword": hashed_password,
+                                                        "strName": data["strName"], 
+                                                        "strLastname": data["strLastname"],
+                                                        "numAge": data["numAge"],
+                                                        "numHeight": data["numHeight"],
+                                                        "strSexo": data["strSexo"],
+                                                        "numWeight": data["numWeight"],
+                                                        "strActivity": data["strActivity"],}})
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnUpdateUser: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+    
+#####################################################################################
+#
+#                               Función DELETE 
+#
+######################################################################################
+
+def fnDeleteUser(objIDParameter):
+    print("\n==============================|fnDeleteUser|==============================\n")
+    try:
+        print("ID => ", objIDParameter)
+        objDeleteUser = dbConnectUsers.delete_one({"_id": ObjectId(objIDParameter)})
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnDeleteUser: ", e)
+        return jsonify(ResponseMessages.err500)
