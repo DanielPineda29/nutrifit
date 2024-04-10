@@ -73,9 +73,7 @@ export default function Login() {
                 reversed={false}
                 margin={"$5"}
               >
-                <Button action="primary" onPress={() => navigation.navigate('Home')}>
-                  <Text>Iniciar sesión</Text>
-                  </Button>
+                <Button_lg name="Iniciar sesión" function={() => navigation.navigate('Home')} />
               </VStack>
 
               <VStack>
