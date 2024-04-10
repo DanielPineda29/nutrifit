@@ -1,16 +1,15 @@
 import { Center, Button, ButtonText, ButtonIcon, ButtonGroup, Icon, AddIcon, InfoIcon, ButtonSpinner, ArrowUpIcon, HStack, ThreeDotsIcon, Input, InputField, } from "@gluestack-ui/themed";
 
-export default function Button_lg() {
+export default function Button_lg(props: any) {
   return (
     <Button
       size="lg"
-      bg="$blue700"
+      backgroundColor="$blue700"
       $hover-bg="$green50"
       $active-bg="$green900"
-      color="$white"
-      $borderRadius="$xl"
+      onPress={props.function}
     >
-      <ButtonText>Iniciar sesión</ButtonText>
+      <ButtonText>{props.name}</ButtonText>
     </Button>
   )
 }

@@ -4,11 +4,13 @@ import { ScrollView } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Navigation from "./navigation/taps/MainTabs";
 
 //Screens
 import Login from "./screens/Login";
 import Register from "./screens/Register";
-import Home from "./screens/home/home";
+import MainTabs from "./navigation/taps/MainTabs";
+import Home from "./screens/home/Home";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +19,7 @@ function MyStacks() {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-      <Stack.Screen name="Home" component={Home} options={{ headerShown: false}} />
+      <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false}} />
     </Stack.Navigator>
   );
 }
