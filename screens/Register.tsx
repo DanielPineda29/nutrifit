@@ -11,7 +11,7 @@ import {
   SelectBackdrop,
 } from "@gluestack-ui/themed";
 import React from "react";
-import Logo from "../resource/iconoRegistro.jpg";
+import Logo from "../assets/resource/iconoRegistro.jpg";
 import { VStack } from "@gluestack-ui/themed";
 import { FormControlLabel } from "@gluestack-ui/themed";
 import { FormControlLabelText } from "@gluestack-ui/themed";
