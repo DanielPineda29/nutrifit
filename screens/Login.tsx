@@ -22,7 +22,7 @@ import {
   Button,
 } from "@gluestack-ui/themed";
 import React from "react";
-import Logo from "../resource/logoSF.png";
+import Logo from "../assets/resource/logoSF.png";
 import { VStack } from "@gluestack-ui/themed";
 import { FormControlLabel } from "@gluestack-ui/themed";
 import { FormControlLabelText } from "@gluestack-ui/themed";
