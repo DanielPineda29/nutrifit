@@ -9,6 +9,7 @@ import {
   ArrowUpIcon,
   HStack,
   ThreeDotsIcon,
+  SafeAreaView,
 } from "@gluestack-ui/themed";
 
 import {
@@ -34,14 +35,17 @@ import { View } from "@gluestack-ui/themed";
 import Register from "./Register";
 import { ScrollView } from "react-native-gesture-handler";
 import { AnimatedText } from "react-native-reanimated/lib/typescript/reanimated2/component/Text";
+import ImageHeading from "../components/ImageHeading";
 export default function Login() {
   const navigation = useNavigation();
   return (
     <>
-      <View>
-          <Box  w={"$full"} h={"25%"} alignSelf="center"  bg="$blue300">
+      <SafeAreaView>
+          {/* <Box  w={"$full"} h={"25%"} alignSelf="center"  bg="$blue300">
               <Image w={"100%"} h={"100%"} source={Logo} alt="logo" />
-          </Box>
+          </Box> */}
+
+          <ImageHeading img={Logo} alt={"Encabezado login"} />
 
           <Box alignSelf="center" marginTop={"$5"} w={"90%"} h={"90%"} >
             <VStack>
@@ -91,7 +95,7 @@ export default function Login() {
               </VStack>
             </VStack>
           </Box>
-      </View>
+      </SafeAreaView>
     </>
   );
 }
