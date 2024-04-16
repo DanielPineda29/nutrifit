@@ -42,6 +42,7 @@ const RecipeCard = (props: any) => {
                   flex: 1,
                 },
               }}
+              onPress={props.function}
             >
               <ButtonText size="sm">{props.buttonText}</ButtonText>
             </Button>

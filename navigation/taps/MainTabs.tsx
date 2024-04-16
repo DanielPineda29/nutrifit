@@ -16,7 +16,7 @@ function MyTabs() {
         }}
         >
             <Tab.Screen name="Home" component={Home} options={{tabBarLabel: 'Home',}}/>
-            <Tab.Screen name="Recipes" component={RecipeMenu} options={{tabBarLabel: 'Recipes Menu', headerShown: false}} />
+            <Tab.Screen name="Recipes" component={RecipeMenu} options={{tabBarLabel: 'Recetas', headerShown: false}} />
         </Tab.Navigator>
     );
 }
