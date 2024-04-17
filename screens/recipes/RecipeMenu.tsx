@@ -45,7 +45,7 @@ const MiComponente = () => {
             textHeading={"Desayunos"}
             text={"Comienza tu día con un festin de delicias matutinas."}
             buttonText={"Ver desayunos"}
-            function={() => navigation.navigate('RecipesList')}
+            function={() => navigation.navigate('RecipesList', {strTime: 'Breakfast'})}
           />
           <RecipeCard
             bgColor={"$yellow300"}
@@ -53,7 +53,7 @@ const MiComponente = () => {
             textHeading={"Comidas"}
             text={"Saborea la excelencia en cada bocado."}
             buttonText={"Ver comidas"}
-            function={() => navigation.navigate('RecipesList')}
+            function={() => navigation.navigate('RecipesList', {strTime: 'Meals'})}
           />
           <RecipeCard
             bgColor={"$primary300"}
@@ -61,7 +61,7 @@ const MiComponente = () => {
             textHeading={"Cenas"}
             text={"Concluye tu día con una cena que alimenta el alma."}
             buttonText={"Ver cenas"}
-            function={() => navigation.navigate('RecipesList')}
+            function={() => navigation.navigate('RecipesList', {strTime: 'Dinner'})}
           />
           <RecipeCard
             bgColor={"$lime300"}
@@ -71,7 +71,7 @@ const MiComponente = () => {
               "Revitaliza tu día con un refrigerio que despierta tus sentidos."
             }
             buttonText={"Ver colaciones"}
-            function={() => navigation.navigate('RecipesList')}
+            function={() => navigation.navigate('RecipesList', {strTime: 'Collation'})}
           />
         </Center>
       </ScrollView>

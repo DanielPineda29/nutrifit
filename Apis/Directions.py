@@ -56,15 +56,29 @@ def getUser(objIDParameter):
         print("\nError en getUser: ", e)
         return jsonify(ResponseMessages.err500)
     
-@app.route('/api/general/recipes', methods=['GET'])
-def getRecipes():
+@app.route('/api/general/recipes/<paramTime>', methods=['GET'])
+def getRecipes(paramTime):
     try:
         print("\n==============================|getRecipes|==============================\n")
-        objRecipes = callFunction.fnGetRecipes()
-        recipes_list = list(objRecipes)
+        objRecipes = callFunction.fnGetRecipes(paramTime)
+        recipes_list = json_util.dumps(list(objRecipes))
         return jsonify(recipes_list)
     except Exception as e:
-        print("\nError en fnGetCollaborators: ", e)
+        print("\nError en getRecipes: ", e)
+        return jsonify(ResponseMessages.err500)
+
+@app.route('/api/general/recipe/<paramID>', methods=['GET'])
+def getRecipe(paramID):
+    try:
+        print("\n==============================|getRecipe|==============================\n")
+        print("_ID RECETA => ", paramID)
+        objRecipe = callFunction.fnGetRecipe(paramID)
+        response = json_util.dumps(objRecipe)
+        print(response)
+        return response
+        #return Response(response, mimetype="application/json")
+    except Exception as e:
+        print("\nError en getRecipe: ",e)
         return jsonify(ResponseMessages.err500)
     
 
