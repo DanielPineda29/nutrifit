@@ -12,34 +12,35 @@ import {
 import React from "react";
 import { View } from "react-native";
 
-const RecipeInfo = (props: any) => {
+
+const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
   return (
     <View>
       <Center>
         <VStack>
           <HStack>
-            <Heading>{props.nameFood}</Heading>
+            <Heading>{recipe.strNameFood}</Heading>
           </HStack>
           <HStack>
             <Heading>Ingredientes</Heading>
           </HStack>
           <HStack>
-            <Text>{props.ingredients}</Text>
+            <Text>{recipe.ingredients.map(ingredient => ingredient.strIngredient).join('\n')}</Text>
           </HStack>
           <HStack>
             <Heading>Preparación</Heading>
           </HStack>
           <HStack>
-            <Text>{props.preparation}</Text>
+            <Text>{recipe.preparation.map(step => step.strPreparation).join('\n')}</Text>
           </HStack>
           <HStack>
             <Badge>
-              <BadgeText>{props.kcal + " kcal"}</BadgeText>
+              <BadgeText>{recipe.numKcal + " kcal"}</BadgeText>
             </Badge>
           </HStack>
           <HStack>
             <Button>
-                <ButtonText>Agregar a favoritos</ButtonText>
+              <ButtonText>Agregar a favoritos</ButtonText>
             </Button>
           </HStack>
         </VStack>

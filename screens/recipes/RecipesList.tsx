@@ -10,11 +10,32 @@ import RecipeList from "../../components/recipe/RecipeList";
 import ImageHeading from "../../components/ImageHeading";
 
 import Breakfast from "../../assets/resource/logo.jpg";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+import { useEffect, useState } from "react";
+import axios from 'axios';
+
+interface Recipe {
+  _id: string;
+  strNameFood: string;
+  numKcal: number;
+}
 
 const RecipesList = () => {
 
-const navigation = useNavigation();
+  const [data, setData] = useState<Recipe[]>([]);
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    axios.get(`http://192.168.0.15:9005/api/general/recipes/${route.params.strTime}`)
+    .then((response) => {
+      setData(JSON.parse(response.data));
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
   return (
     <SafeAreaView>
@@ -23,25 +44,17 @@ const navigation = useNavigation();
         <Center>
           <Heading>Desayunos</Heading>
         </Center>
-        <RecipeList
+        {data.map((item) => (
+          <RecipeList
+          key={item._id}
           img={Breakfast}
           alt={"Nombre comida"}
-          nameFood={"Sandwich Montecristo"}
-          kcal={295}
-          function={() => navigation.navigate('RecipesInfo')}
+          strNameFood={item.strNameFood}
+          numKcal={item.numKcal}
+          function={() => navigation.navigate('RecipesInfo', {_id: item._id })}
         />
-        <RecipeList
-          img={Breakfast}
-          alt={"Nombre comida"}
-          nameFood={"Sandwich Montecristo"}
-          kcal={295}
-        />
-        <RecipeList
-          img={Breakfast}
-          alt={"Nombre comida"}
-          nameFood={"Sandwich Montecristo"}
-          kcal={295}
-        />
+        ))}
+        
       </ScrollView>
     </SafeAreaView>
   );

@@ -66,16 +66,28 @@ def fnGetUser(objIDParameter):
         print("\nError en fnGetUser: ", e)
         return jsonify(ResponseMessages.err500)
     
-def fnGetRecipes():
+def fnGetRecipes(strTime):
     print("\n==============================|fnGetRecipes|==============================\n")
     try:
-        objFindRecipes = dbConnectRecipes.find({})
+        objFindRecipes = dbConnectRecipes.find({"strTime":strTime})
         print("DATA => ", objFindRecipes)
         objResponse = ResponseMessages.succ200.copy()
         objResponse = objFindRecipes
         return objResponse
     except Exception as e:
         print("\nError en fnGetUsers: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+def fnGetRecipe(paramID):
+    print("\n==============================|fnGetRecipe|==============================\n")
+    try:
+        objFindRecipe = dbConnectRecipes.find({'_id': ObjectId(paramID)})
+        #print("DATA => ", objFindRecipe)
+        objResponse = ResponseMessages.succ200.copy()
+        objResponse = objFindRecipe
+        return objResponse
+    except Exception as e:
+        print("\nError en fnGetRecipe: ", e)
         return jsonify(ResponseMessages.err500)
     
 

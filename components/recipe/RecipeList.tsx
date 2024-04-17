@@ -19,10 +19,10 @@ const RecipeList = (props: any) => {
         <VStack>
           <Image size="xl" source={props.img} alt={props.alt} borderRadius="$3xl" />
         </VStack>
-        <VStack marginLeft={"$10"}>
+        <VStack>
           <Center>
-            <Heading>{props.nameFood}</Heading>
-            <Text marginTop={"$2"}>{props.kcal + " kcal"}</Text>
+            <Heading>{props.strNameFood}</Heading>
+            <Text marginTop={"$2"}>{props.numKcal + " kcal"}</Text>
             <Button marginTop={"$2"} onPress={props.function}>
               <ButtonText>Ver más</ButtonText>
             </Button>
