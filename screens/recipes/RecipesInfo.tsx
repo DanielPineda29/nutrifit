@@ -5,31 +5,16 @@ import RecipeInfo from '../../components/recipe/RecipeInfo';
 import Imagen from '../../assets/resource/logo.jpg';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-
-interface Recipe {
-  _id: { $oid: string };
-  strNameFood: string;
-  ingredients: Ingredient[];
-  preparation: Preparation[];
-  numKcal: number;
-}
-
-interface Ingredient {
-  _id: number;
-  strIngredient: string;
-}
-
-interface Preparation {
-  _id: number;
-  strPreparation: string;
-}
+import { getRecipe } from '../../src/lib/Api/features/recipesSlice';
+import { Recipe } from '../../src/lib/models/recipe';
 
 const RecipesInfo = () => {
 
   const route = useRoute();
-  const recipeID = route.params?._id?.$oid;
-  const [recipe, setRecipe] = useState(null);
+  const recipeID = route.params?.recipeID.$oid;
+  const [recipe, setRecipe] = useState<Recipe | undefined>(null);
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,7 +28,19 @@ const RecipesInfo = () => {
   
     fetchData();
   }, [recipeID]);
-  
+  */
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const recipeData = await getRecipe(recipeID); 
+        setRecipe(recipeData);
+      } catch (error) {
+        console.error("Error en obtener la receta: ", error);
+      }
+    };
+    fetchData();
+  },[recipeID]);
 
   return (
     <VStack>
