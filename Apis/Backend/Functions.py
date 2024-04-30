@@ -58,7 +58,7 @@ def fnGetUser(objIDParameter):
     try:
         print("ID => ", objIDParameter)
         objFindUser = dbConnectUsers.find_one({'_id':ObjectId(objIDParameter)})
-        print("DATA => ", objFindUser)
+        objFindUser["_id"] = str(objFindUser["_id"])
         objResponse = ResponseMessages.succ200.copy()
         objResponse = objFindUser
         return objResponse
@@ -70,7 +70,7 @@ def fnGetRecipes(strTime):
     print("\n==============================|fnGetRecipes|==============================\n")
     try:
         objFindRecipes = dbConnectRecipes.find({"strTime":strTime})
-        print("DATA => ", objFindRecipes)
+        objFindRecipes = [{**doc, "_id": str(doc["_id"])} for doc in objFindRecipes]
         objResponse = ResponseMessages.succ200.copy()
         objResponse = objFindRecipes
         return objResponse
@@ -81,8 +81,8 @@ def fnGetRecipes(strTime):
 def fnGetRecipe(paramID):
     print("\n==============================|fnGetRecipe|==============================\n")
     try:
-        objFindRecipe = dbConnectRecipes.find({'_id': ObjectId(paramID)})
-        #print("DATA => ", objFindRecipe)
+        objFindRecipe = dbConnectRecipes.find_one({'_id': ObjectId(paramID)})
+        objFindRecipe["_id"] = str(objFindRecipe["_id"])
         objResponse = ResponseMessages.succ200.copy()
         objResponse = objFindRecipe
         return objResponse

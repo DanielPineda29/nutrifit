@@ -61,8 +61,8 @@ def getRecipes(paramTime):
     try:
         print("\n==============================|getRecipes|==============================\n")
         objRecipes = callFunction.fnGetRecipes(paramTime)
-        recipes_list = json_util.dumps(list(objRecipes))
-        return jsonify(recipes_list)
+        json_util.dumps(objRecipes)
+        return jsonify(objRecipes)
     except Exception as e:
         print("\nError en getRecipes: ", e)
         return jsonify(ResponseMessages.err500)
@@ -73,10 +73,8 @@ def getRecipe(paramID):
         print("\n==============================|getRecipe|==============================\n")
         print("_ID RECETA => ", paramID)
         objRecipe = callFunction.fnGetRecipe(paramID)
-        response = json_util.dumps(objRecipe)
-        print(response)
-        return response
-        #return Response(response, mimetype="application/json")
+        json_util.dumps(objRecipe)
+        return jsonify(objRecipe)
     except Exception as e:
         print("\nError en getRecipe: ",e)
         return jsonify(ResponseMessages.err500)
