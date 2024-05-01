@@ -38,3 +38,10 @@ export const getRecipe = async (recipeID: string) => {
         throw new Error("Error al obtener la receta" + error);
     }
 };
+
+//CREATE RECIPE =>
+// export const createRecipe = async (recipe: Recipe) => {
+//     try {
+//         const response = await Api.get()
+//     }
+// } 

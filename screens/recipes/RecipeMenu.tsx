@@ -26,6 +26,13 @@ const MiComponente = () => {
 
   const navigation = useNavigation();
 
+  const handleScreenList = (strTime: string, title: string) => {
+    navigation.navigate("RecipesList", {strTime, title});
+  }
+  
+
+  // 'RecipesList', {strTime: 'Breakfast'}
+
   return (
     <SafeAreaView>
       <ScrollView w={"full"} h={"full"}>
@@ -45,7 +52,7 @@ const MiComponente = () => {
             textHeading={"Desayunos"}
             text={"Comienza tu día con un festin de delicias matutinas."}
             buttonText={"Ver desayunos"}
-            function={() => navigation.navigate('RecipesList', {strTime: 'Breakfast'})}
+            onClick={() => handleScreenList("Breakfast", "Desayunos")}
           />
           <RecipeCard
             bgColor={"$yellow300"}
@@ -53,7 +60,7 @@ const MiComponente = () => {
             textHeading={"Comidas"}
             text={"Saborea la excelencia en cada bocado."}
             buttonText={"Ver comidas"}
-            function={() => navigation.navigate('RecipesList', {strTime: 'Meals'})}
+            onClick={() => handleScreenList("Meals", "Comidas")}
           />
           <RecipeCard
             bgColor={"$primary300"}
@@ -61,7 +68,7 @@ const MiComponente = () => {
             textHeading={"Cenas"}
             text={"Concluye tu día con una cena que alimenta el alma."}
             buttonText={"Ver cenas"}
-            function={() => navigation.navigate('RecipesList', {strTime: 'Dinner'})}
+            onClick={() => handleScreenList("Dinner", "Cenas")}
           />
           <RecipeCard
             bgColor={"$lime300"}
@@ -71,7 +78,7 @@ const MiComponente = () => {
               "Revitaliza tu día con un refrigerio que despierta tus sentidos."
             }
             buttonText={"Ver colaciones"}
-            function={() => navigation.navigate('RecipesList', {strTime: 'Collation'})}
+            onClick={() => handleScreenList("Collation", "Colaciones")}
           />
         </Center>
       </ScrollView>

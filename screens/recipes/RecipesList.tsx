@@ -22,6 +22,7 @@ const RecipesList = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const strTime = route.params?.strTime;
+  const title = route.params?.title;
 
   console.info("ROUTE: ", strTime);
 
@@ -49,13 +50,14 @@ const RecipesList = () => {
     fetchData();
   }, [strTime]);
 
+
   console.info('RECIPES:> ', recipes);
   return (
     <SafeAreaView>
       <ScrollView w={"$full"} h={"$full"}>
         <ImageHeading img={Breakfast} alt={"Encabezado desayunos"} />
         <Center>
-          <Heading>Desayunos</Heading>
+          <Heading>{title}</Heading>
         </Center>
         {recipes.map((item) => (
           <RecipeList

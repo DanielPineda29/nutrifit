@@ -6,19 +6,19 @@ import IMAGE from '../../assets/resource/misdatos.jpg';
 import Button_lg from '../../components/Button_lg';
 import { useNavigation } from '@react-navigation/native';
 import { Heading } from '@gluestack-ui/themed';
+import RecipeCard from '../../components/recipe/RecipeCard';
 
-const MenuUser = () => {
+const FavRecipes = () => {
 
     const navigation = useNavigation();
 
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Datos de usuario"} />
-      <Heading>Configuración</Heading>
-      <Button_lg name={"Mis datos"} function={ () => navigation.navigate('UserInfo') } />
-      <Button_lg name={"Mis recetas"} function={ () => navigation.navigate('FavRecipes') } />
+      <Heading>Mis recetas favoritas</Heading>
+      {/* <RecipeCard /> */}
     </View>
   );
 };
 
-export default MenuUser;
+export default FavRecipes;

@@ -45,6 +45,31 @@ def fnRegisterUser(data):
     except Exception as e:
         print("\nError en fnRegisterUser: ", e)
         return jsonify(ResponseMessages.err500)
+    
+def fnPostRecipe(data):
+    try:
+        objCreateRecipe = dbConnectRecipes.insert_one({
+            "strNameFood": data["strNameFood"],
+            "numKcal": data["numKcal"],
+            "strTime": data["strTime"]
+        })
+        objCreateRecipe = ResponseMessages.suc200.copy()
+        return objCreateRecipe
+    except Exception as e:
+        print("\nError en fnRegisterUser: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+def fnPostFavRecipe(idUser, idRecipe):
+    try:
+        objCreateFavRecipe = dbConnectFavRecipes.insert_one({
+            "idUser": idUser,
+            "idRecipes": [{"_idRecipe": idRecipe}]
+        })
+        objCreateFavRecipe = ResponseMessages.succ200.copy()
+        return objCreateFavRecipe
+    except Exception as e:
+        print("\nError en fnPostFavRecipe: ",e)
+        return jsonify(ResponseMessages.err500)
 
     
 #####################################################################################
@@ -88,6 +113,17 @@ def fnGetRecipe(paramID):
         return objResponse
     except Exception as e:
         print("\nError en fnGetRecipe: ", e)
+        return jsonify(ResponseMessages.err500)
+
+def fnGetFavRecipe(idUser):
+    try:
+        objFindFavRecipe = dbConnectFavRecipes.find_one({'_idUser': ObjectId(idUser)})
+        objFindFavRecipe["_idUser"] = str(objFindFavRecipe["_idUser"])
+        for favRecipe in objFindFavRecipe.get('recipes', []):
+            favRecipe['_idRecipe'] = str(favRecipe['_idRecipe'])
+        objFindFavRecipe = ResponseMessages.succ200.copy()
+        return objFindFavRecipe
+    except Exception as e :
         return jsonify(ResponseMessages.err500)
     
 
@@ -136,4 +172,13 @@ def fnDeleteUser(objIDParameter):
         return objResponse
     except Exception as e:
         print("\nError en fnDeleteUser: ", e)
+        return jsonify(ResponseMessages.err500)
+    
+def fnDeleteRecipe(objIDParameter):
+    try:
+        objDeleteRecipe = dbConnectRecipes.delete_one({"_id": ObjectId(objIDParameter)})
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnDeleteRecipe: ",e)
         return jsonify(ResponseMessages.err500)

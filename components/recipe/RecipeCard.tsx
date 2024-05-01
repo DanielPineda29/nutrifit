@@ -1,8 +1,17 @@
 import { Box, Button, ButtonText, Card, Heading, Image, VStack } from '@gluestack-ui/themed';
-import React from 'react';
+import React,{FC} from 'react';
 import { View, Text } from 'react-native';
 
-const RecipeCard = (props: any) => {
+interface CardProps {
+  bgColor: string;
+  img: string;
+  textHeading: string;
+  text: string;
+  buttonText: string;
+  onClick: () => void;
+}
+
+const RecipeCard: React.FC<CardProps> = (props) => {
   return (
     <Card p="$5" borderRadius="$lg" m="$3" backgroundColor={props.bgColor}>
           <Image
@@ -42,7 +51,7 @@ const RecipeCard = (props: any) => {
                   flex: 1,
                 },
               }}
-              onPress={props.function}
+              onPress={props.onClick}
             >
               <ButtonText size="sm">{props.buttonText}</ButtonText>
             </Button>

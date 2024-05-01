@@ -11,8 +11,8 @@ import { Recipe } from '../../src/lib/models/recipe';
 const RecipesInfo = () => {
 
   const route = useRoute();
-  const recipeID = route.params?.recipeID.$oid;
-  const [recipe, setRecipe] = useState<Recipe | undefined>(null);
+  const recipeID = route.params?.recipeID;
+  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
 
   /*
   useEffect(() => {
