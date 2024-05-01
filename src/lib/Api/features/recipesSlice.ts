@@ -1,6 +1,6 @@
 import { Api, Response } from '../Api';
 
-import {Recipe, Ingredients, Preparation} from '../../models/recipe';
+import {Recipe, Ingredients, Preparation} from '../../models/recipeModel';
 
 interface RecipeInitialState {
     recipes: Recipe[];

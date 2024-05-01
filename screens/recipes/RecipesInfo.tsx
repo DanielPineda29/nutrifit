@@ -6,7 +6,7 @@ import Imagen from '../../assets/resource/logo.jpg';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { getRecipe } from '../../src/lib/Api/features/recipesSlice';
-import { Recipe } from '../../src/lib/models/recipe';
+import { Recipe } from '../../src/lib/models/recipeModel';
 
 const RecipesInfo = () => {
 
