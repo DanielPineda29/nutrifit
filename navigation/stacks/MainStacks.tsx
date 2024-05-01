@@ -7,6 +7,7 @@ import RecipesList from "../../screens/recipes/RecipesList";
 import RecipesInfo from "../../screens/recipes/RecipesInfo";
 import UserInfo from "../../components/user/UserInfo";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FavRecipes from "../../screens/favRecipes/FavRecipes";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,11 @@ function MyStacks() {
         <Stack.Screen
           name="UserInfo"
           component={UserInfo}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FavRecipes"
+          component={FavRecipes}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
