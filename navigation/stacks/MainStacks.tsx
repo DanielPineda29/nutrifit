@@ -1,5 +1,5 @@
 //Screens
-import Login from "../../screens/Login";
+import Login from "../../screens/auth/Login";
 import Register from "../../screens/Register";
 import MainTabs from "../../navigation/taps/MainTabs";
 import Home from "../../screens/home/Home";

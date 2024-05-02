@@ -78,11 +78,25 @@ def fnPostFavRecipe(idUser, idRecipe):
 #
 ######################################################################################
 
-def fnGetUser(objIDParameter):
+def fnCheckUser(data):
+    try:
+        objFindUser = dbConnectUsers.find_one({'strEmail':data['strEmail']})
+        if objFindUser:
+            if check_password_hash(objFindUser['strPassword'], data['strPassword']):
+                return {'exists': True}
+            else:
+                return {'exists': False}
+        else:
+            return {'exists': False}
+    except Exception as e:
+        print("\nError en fnCheckUser: ",e)
+        return jsonify(ResponseMessages.err500)
+
+def fnGetUser(strEmail):
     print("\n==============================|fnGetUser|==============================\n")
     try:
-        print("ID => ", objIDParameter)
-        objFindUser = dbConnectUsers.find_one({'_id':ObjectId(objIDParameter)})
+        print("ID => ", strEmail)
+        objFindUser = dbConnectUsers.find_one({'strEmail':strEmail})
         objFindUser["_id"] = str(objFindUser["_id"])
         objResponse = ResponseMessages.succ200.copy()
         objResponse = objFindUser

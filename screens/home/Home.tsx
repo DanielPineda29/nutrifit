@@ -10,15 +10,23 @@ import {
   Text,
   ScrollView,
 } from "@gluestack-ui/themed";
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import Button_lg from "../../components/Button_lg";
+import { AuthContext } from "../auth/AuthContext";
 
 const reset = () => {
   console.log("reset");
 };
 
+
+
 const Home = () => {
+
+  const {user} = useContext(AuthContext);
+
+  console.log('user en home ==> ', user)
+
   return (
     <View>
       <ScrollView>
@@ -26,11 +34,11 @@ const Home = () => {
           <VStack>
             <HStack space="2xl">
               <Avatar size="2xl" bgColor="$indigo600">
-                <AvatarFallbackText>Daniel Pineda</AvatarFallbackText>
+                <AvatarFallbackText>{user?.strName}</AvatarFallbackText>
               </Avatar>
               <VStack>
                 <Heading size="2xl" marginTop={"$8"}>
-                  Daniel Pineda
+                {user?.strName}
                 </Heading>
                 <Text size="2xl">Bienvenido</Text>
               </VStack>

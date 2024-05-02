@@ -17,21 +17,22 @@ const initialState: RecipeInitialState = {
 };
 
 
-//GET RECIPES =>
-export const getRecipes = async (paramTime: string) => {
+//CHECK USER =>
+export const checkEmailExists = async (strEmail: string, strPassword: string) => {
     try {
-        const response = await Api.get(`/recipes/${paramTime}`,{headers:{'Content-Type':'application/json'}});
-        console.log('API Response getRecipes: ', response.data);
-        return response.data;
+        console.log('checkEmailExists strEmail: ', strEmail)
+        const response = await Api.post('/user/check_email',{strEmail, strPassword},{headers:{'Content-Type':'application/json'}});
+        console.log('API Response checkEmailExists: ', response.data);
+        return response.data.exists;
     } catch (error) {
         throw new Error("Error al obtener la receta" + error);
     }
 };
 
-//GET RECIPE =>
-export const getRecipe = async (recipeID: string) => {
+//GET USER =>
+export const getUser = async (strEmail: string) => {
     try {
-        const response = await Api.get(`/recipe/${recipeID}`,{headers:{'Content-Type':'application/json'}});
+        const response = await Api.get(`/user/${strEmail}`,{headers:{'Content-Type':'application/json'}});
         console.log('API Response getRecipe: ', response.data);
         return response.data;
     } catch (error) {

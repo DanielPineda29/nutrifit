@@ -11,12 +11,17 @@ const MenuUser = () => {
 
     const navigation = useNavigation();
 
+    const handleLogout = () => {
+      navigation.navigate('Login');
+    };
+
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Datos de usuario"} />
       <Heading>Configuración</Heading>
       <Button_lg name={"Mis datos"} function={ () => navigation.navigate('UserInfo') } />
       <Button_lg name={"Mis recetas"} function={ () => navigation.navigate('FavRecipes') } />
+      <Button_lg name={"Cerrar sesión"} function={ handleLogout } />
     </View>
   );
 };

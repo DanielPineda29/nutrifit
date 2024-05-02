@@ -11,7 +11,7 @@ import {
 } from "@gluestack-ui/themed";
 import React from "react";
 import { View } from "react-native";
-import { Recipe } from "../../src/lib/models/recipe";
+import { Recipe } from "../../src/lib/models/recipeModel";
 
 
 const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
