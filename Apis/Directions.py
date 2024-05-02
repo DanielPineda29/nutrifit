@@ -44,6 +44,16 @@ def postCreateRecipe():
 #
 ######################################################################################
 
+@app.route('/api/general/user/check_email', methods=['POST'])
+def checkEmail():
+    try:
+        data = request.json
+        objFindUser = callFunction.fnCheckUser(data)
+        return jsonify(objFindUser)
+    except Exception as e:
+        print("\nError en checkEmail: ",e)
+        return jsonify(ResponseMessages.err500)
+
 @app.route('/api/general/users', methods=['GET'])
 def getUsers():
     try:
@@ -53,15 +63,16 @@ def getUsers():
         print("\nError en getUsers: ", e)
         return jsonify(ResponseMessages.err500)    
     
-@app.route('/api/general/user/<objIDParameter>', methods=['GET'])
-def getUser(objIDParameter):
+@app.route('/api/general/user/<strEmail>', methods=['GET'])
+def getUser(strEmail):
     try:
         print("\n==============================|getUser|==============================\n")
-        print("ID => ", objIDParameter)
-        objUser = callFunction.fnGetUser(objIDParameter)
+        print("ID => ", strEmail)
+        objUser = callFunction.fnGetUser(strEmail)
         json_util.dumps(objUser)
         print("Información del usuario", objUser)
-        return Response(objUser, mimetype="application/json")
+        #return Response(objUser, mimetype="application/json")
+        return jsonify(objUser)
     except Exception as e:
         print("\nError en getUser: ", e)
         return jsonify(ResponseMessages.err500)
