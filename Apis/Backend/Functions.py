@@ -17,6 +17,29 @@ if Keys.dbconn == None:
     dbConnectFavRecipes = Keys.dbconn["favRecipes"]
     print("dbConnectUsers: ", dbConnectUsers)
 
+# Calculate daily calories
+
+def calculate_daily_calories(data):
+    # Tasa Metabólica Basal (TMB)
+    tmb = 0
+    # Calculando TMB basado en el sexo del usuario
+    if data["strSexo"] == "Masculino":
+        tmb = (10 * data["numWeight"]) + (6.25 * data["numHeight"]) - (5 * data["numAge"]) + 5
+    else:
+        tmb = (10 * data["numWeight"]) + (6.25 * data["numHeight"]) - (5 * data["numAge"]) - 161
+    
+    # Ajustando TMB basado en el nivel de actividad física
+    activity_factor = {
+        "Poco o ningún ejercicio": 1.2,
+        "Ejercicio ligero (1-3 días a la semana)": 1.375,
+        "Ejercicio moderado (3-5 días a la semana)": 1.55,
+        "Ejercicio fuerte (6-7 días a la semana)": 1.725,
+        "Ejercicio muy fuerte (dos veces al día, entrenamientos muy duros)": 1.9
+    }
+    adjusted_tmb = tmb * activity_factor[data["strActivity"]]
+
+    return round(adjusted_tmb)
+
 
 #####################################################################################
 #
@@ -29,16 +52,21 @@ def fnRegisterUser(data):
     try:
         print("DATA => ", data)
         hashed_password = generate_password_hash(data['strPassword'])
+        daily_calories = calculate_daily_calories(data)
         objCreateUser = dbConnectUsers.insert_one({
             "strEmail": data["strEmail"],
             "strPassword": hashed_password,
             "strName": data["strName"], 
             "strLastname": data["strLastname"],
             "numAge": data["numAge"],
-            "numHeight": data["numHeight"],
             "strSexo": data["strSexo"],
+            "numHeight": data["numHeight"],
             "numWeight": data["numWeight"],
             "strActivity": data["strActivity"],
+            "strRole": data["strRole"],
+            "numDailyCalories": daily_calories,
+            "favRecipes":data["favRecipes"],
+            "favExcercises": data["favExcercises"],
             })
         objResponse = ResponseMessages.succ200.copy()
         return objResponse

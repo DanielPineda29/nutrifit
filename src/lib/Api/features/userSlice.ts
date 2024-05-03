@@ -1,44 +1,130 @@
 import { Api, Response } from '../Api';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import {Recipe, Ingredients, Preparation} from '../../models/recipeModel';
+import { User } from '../../models/userModel';
 
-interface RecipeInitialState {
-    recipes: Recipe[];
-    recipe: Recipe | null;
-    ingredients: Ingredients[];
-    preparation: Preparation[];
+interface UserInitialState {
+    user: User | null;
+    userResponse: number | null;
 };
 
-const initialState: RecipeInitialState = {
-    recipes:[],
-    recipe: null,
-    ingredients:[],
-    preparation:[],
+const initialState: UserInitialState = {
+    user: null,
+    userResponse: null,
 };
+
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: initialState,
+    reducers: {
+        setUser: (state, action: PayloadAction<User | null>) => {
+            state.user = action.payload;
+          },
+        resetUser: (state) => {
+            state.user = null;
+        }
+    },
+    extraReducers: (builder) => {
+        //CHECK USER =>
+            builder.addCase(checkEmailExists.fulfilled, (state, action) => {
+                state.userResponse = 200;
+                state.user = action.payload || initialState.user;
+            });
+            builder.addCase(checkEmailExists.rejected, (state) => {
+                state.userResponse = 400;
+            });
+        //GET USER =>
+            builder.addCase(getUser.fulfilled, (state, action) => {
+                state.userResponse = 200;
+                state.user = action.payload || initialState.user;
+            });
+            builder.addCase(getUser.rejected, (state) => {
+                state.userResponse = 400;
+            });
+        //EDIT USER =>
+            builder.addCase(updateUser.fulfilled, (state, action) => {
+            state.userResponse = 200;
+            state.user = action.payload || initialState.user;
+            });
+            builder.addCase(updateUser.rejected, (state) => {
+                state.userResponse = 400;
+            });
+    },
+});
+
 
 
 //CHECK USER =>
-export const checkEmailExists = async (strEmail: string, strPassword: string) => {
-    try {
-        console.log('checkEmailExists strEmail: ', strEmail)
-        const response = await Api.post('/user/check_email',{strEmail, strPassword},{headers:{'Content-Type':'application/json'}});
-        console.log('API Response checkEmailExists: ', response.data);
-        return response.data.exists;
-    } catch (error) {
-        throw new Error("Error al obtener la receta" + error);
+// export const checkEmailExists = async (strEmail: string, strPassword: string) => {
+//     try {
+//         console.log('checkEmailExists strEmail: ', strEmail)
+//         const response = await Api.post('/user/check_email',{strEmail, strPassword},{headers:{'Content-Type':'application/json'}});
+//         console.log('API Response checkEmailExists: ', response.data);
+//         return response.data.exists;
+//     } catch (error) {
+//         throw new Error("Error al obtener la receta" + error);
+//     }
+// };
+
+export const checkEmailExists = createAsyncThunk(
+    'user/checkEmailExists',
+    async ({strEmail, strPassword}:{strEmail: string, strPassword: string}) =>  {
+        try {
+            const response = await Api.post('/user/check_email', {strEmail, strPassword},{
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            console.log('API Response checkEmailExists: ', response.data);
+            return response.data.exists;
+        } catch (error) {
+            throw new Error('Error al verificar el usuario ' + error);
+        }
     }
-};
+);
+
+export const getUser = createAsyncThunk(
+    'user/getUser',
+    async (strEmail: string) => {
+        try {
+            const response = await Api.get(`/user/${strEmail}`,{
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener el usuario: ' + error);
+        }
+    }
+);
+
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async ({id, payload: User}:{id: String, payload: User}) => {
+        try {
+            const response = await Api.put(`/updateUser/${id}`, User, {
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al editar el usuario: ' + error);
+        }
+    }
+);
 
 //GET USER =>
-export const getUser = async (strEmail: string) => {
-    try {
-        const response = await Api.get(`/user/${strEmail}`,{headers:{'Content-Type':'application/json'}});
-        console.log('API Response getRecipe: ', response.data);
-        return response.data;
-    } catch (error) {
-        throw new Error("Error al obtener la receta" + error);
-    }
-};
+// export const getUser = async (strEmail: string) => {
+//     try {
+//         const response = await Api.get(`/user/${strEmail}`,{headers:{'Content-Type':'application/json'}});
+//         console.log('API Response getRecipe: ', response.data);
+//         return response.data;
+//     } catch (error) {
+//         throw new Error("Error al obtener la receta" + error);
+//     }
+// };
 
 //CREATE RECIPE =>
 // export const createRecipe = async (recipe: Recipe) => {
@@ -46,3 +132,7 @@ export const getUser = async (strEmail: string) => {
 //         const response = await Api.get()
 //     }
 // } 
+
+
+export const { setUser, resetUser } = userSlice.actions;
+export default userSlice.reducer;

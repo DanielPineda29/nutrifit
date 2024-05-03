@@ -2,12 +2,11 @@
 import Login from "../../screens/auth/Login";
 import Register from "../../screens/Register";
 import MainTabs from "../../navigation/taps/MainTabs";
-import Home from "../../screens/home/Home";
 import RecipesList from "../../screens/recipes/RecipesList";
 import RecipesInfo from "../../screens/recipes/RecipesInfo";
-import UserInfo from "../../components/user/UserInfo";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FavRecipes from "../../screens/favRecipes/FavRecipes";
+import UserData from "../../screens/configUser/UserData";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +40,7 @@ function MyStacks() {
         />
         <Stack.Screen
           name="UserInfo"
-          component={UserInfo}
+          component={UserData}
           options={{ headerShown: false }}
         />
         <Stack.Screen

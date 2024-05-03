@@ -14,11 +14,14 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getRecipes } from "../../src/lib/Api/features/recipesSlice";
+import { getRecipe, getRecipes, setRecipe, setRecipes } from "../../src/lib/Api/features/recipesSlice";
 import { Recipe } from "../../src/lib/models/recipeModel";
+import { useDispatch, useSelector } from "react-redux";
 
 const RecipesList = () => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  //const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const dispatch = useDispatch();
+  const {recipes} = useSelector(state => state.recipe);
   const navigation = useNavigation();
   const route = useRoute();
   const strTime = route.params?.strTime;
@@ -38,17 +41,27 @@ const RecipesList = () => {
   }, []);
   */
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const recipesData = await getRecipes(strTime);
-        setRecipes(recipesData);
-      } catch (error) {
-        console.error("Error response recipes: ", error);
-      }
-    };
-    fetchData();
-  }, [strTime]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const recipesData = await dispatch(getRecipes(strTime));
+  //       dispatch(setRecipes(recipesData.payload));
+  //     } catch (error) {
+  //       console.error("Error response recipes: ", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [strTime]);
+
+  const handleRecipe = async (idRecipe: string) => {
+    try {
+      const recipeData = await dispatch(getRecipe(idRecipe));
+      dispatch(setRecipe(recipeData.payload));
+      navigation.navigate("RecipesInfo");
+    } catch (error) {
+      throw new Error("Error al obtener la receta: " + error);
+    }
+  };
 
 
   console.info('RECIPES:> ', recipes);
@@ -66,8 +79,9 @@ const RecipesList = () => {
             alt={"Nombre comida"}
             strNameFood={item.strNameFood}
             numKcal={item.numKcal}
-            function={() =>
-              navigation.navigate("RecipesInfo", { recipeID: item._id })
+            function={
+              // navigation.navigate("RecipesInfo", { recipeID: item._id })
+              () => handleRecipe(item._id)
             }
           />
         ))}

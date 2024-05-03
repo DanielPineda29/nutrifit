@@ -13,7 +13,7 @@ import {
 import React, { useContext } from "react";
 import { View } from "react-native";
 import Button_lg from "../../components/Button_lg";
-import { AuthContext } from "../auth/AuthContext";
+import { useSelector } from "react-redux";
 
 const reset = () => {
   console.log("reset");
@@ -23,7 +23,7 @@ const reset = () => {
 
 const Home = () => {
 
-  const {user} = useContext(AuthContext);
+  const {user} = useSelector(state => state.user);
 
   console.log('user en home ==> ', user)
 
@@ -34,11 +34,11 @@ const Home = () => {
           <VStack>
             <HStack space="2xl">
               <Avatar size="2xl" bgColor="$indigo600">
-                <AvatarFallbackText>{user?.strName}</AvatarFallbackText>
+                <AvatarFallbackText>{user.strName + user.strLastname}</AvatarFallbackText>
               </Avatar>
               <VStack>
                 <Heading size="2xl" marginTop={"$8"}>
-                {user?.strName}
+                {user.strName + ' ' +user.strLastname}
                 </Heading>
                 <Text size="2xl">Bienvenido</Text>
               </VStack>
@@ -55,7 +55,7 @@ const Home = () => {
               <Heading fontSize={"$3xl"}>Kcal consumidas</Heading>
             </HStack>
             <HStack alignSelf="center" margin={"$5"}>
-              <Text fontSize={"$2xl"}>1290 de 2500</Text>
+              <Text fontSize={"$2xl"}>1290 de {user.numDailyCalories}</Text>
             </HStack>
             <Button_lg
               name="Reiniciar"
