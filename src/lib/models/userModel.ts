@@ -5,8 +5,22 @@ export interface User {
     strName: string;
     strLastname: string;
     numAge: number;
-    numHeight: number;
     strSexo: string;
+    numHeight: number;
     numWeight: number;
     strActivity: string;
+    strRole: string;
+    numDailyCalories: number;
+    favRecipes: [];
+    favExcercises: [];
+}
+
+export interface FavRecipes {
+    _id: string;
+    flagActivated: boolean;
+}
+
+export interface FavExercises {
+    _id: string;
+    flagActivated: boolean;
 }

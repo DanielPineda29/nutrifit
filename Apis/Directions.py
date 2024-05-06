@@ -127,7 +127,7 @@ def putUpdateUser(objIDParameter):
         print("ID => ", objIDParameter)
         data = request.json
         print('DATA => ', data)
-        objUpdateUser = callFunction.fnUpdateUser(objIDParameter ,data)
+        objUpdateUser = callFunction.fnUpdateUser(objIDParameter, data)
         return jsonify(objUpdateUser)
     except Exception as e:
         print("\nError en la función putUpdateUser: ", e)

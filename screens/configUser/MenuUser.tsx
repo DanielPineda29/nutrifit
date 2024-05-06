@@ -6,12 +6,16 @@ import IMAGE from '../../assets/resource/misdatos.jpg';
 import Button_lg from '../../components/Button_lg';
 import { useNavigation } from '@react-navigation/native';
 import { Heading } from '@gluestack-ui/themed';
+import { useDispatch } from 'react-redux';
+import { resetUser } from '../../src/lib/Api/features/userSlice';
 
 const MenuUser = () => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
+      dispatch(resetUser());
       navigation.navigate('Login');
     };
 

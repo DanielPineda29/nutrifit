@@ -37,13 +37,15 @@ import {
   import { AnimatedText } from "react-native-reanimated/lib/typescript/reanimated2/component/Text";
   import ImageHeading from "../../components/ImageHeading";
   import { AuthContext } from "./AuthContext";
-import { checkEmailExists, getUser } from "../../src/lib/Api/features/userSlice";
+import { checkEmailExists, getUser, setUser } from "../../src/lib/Api/features/userSlice";
 import {User} from '../../src/lib/models/userModel';
+import { useDispatch } from "react-redux";
   
   
   export default function Login() {
     
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const {login} = useContext(AuthContext);
     const [strEmail, setStrEmail] = useState('');
     const [strPassword, setStrPassword] = useState('');
@@ -51,11 +53,12 @@ import {User} from '../../src/lib/models/userModel';
 
     const handleLogin = async () => {
         try {
-            const emailExists = await checkEmailExists(strEmail, strPassword);
-            if (emailExists) {
-                //const userData = await getUser(strEmail);
-                //console.log('userData ==> ', userData);
-                login(strEmail);
+            const emailExistsResult = await dispatch(checkEmailExists({ strEmail, strPassword }));
+            // const emailExists = actionResult;
+            // console.log('EmailExists: ', actionResult);
+            if (emailExistsResult.payload) {
+                const userData = await dispatch(getUser(strEmail));
+                dispatch(setUser(userData.payload));
                 navigation.navigate('Home');
             } else {
                 setEmailError('El correo no esta registrado');

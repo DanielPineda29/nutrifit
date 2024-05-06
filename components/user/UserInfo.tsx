@@ -4,14 +4,20 @@ import ImageHeading from "../ImageHeading";
 
 import IMAGE from "../../assets/resource/misdatos.jpg";
 import { Button, Center, Heading, Icon, Text } from "@gluestack-ui/themed";
-import { EditIcon } from "@gluestack-ui/themed-native-base";
+import EditIcon from "@gluestack-ui/themed-native-base";
+import { User } from "../../src/lib/models/userModel";
 
-const UserInfo = (props: any) => {
+interface otherFeatures {
+  onPress: () => void;
+}
+
+const UserInfo = (props: User, features: otherFeatures) => {
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Mis datos"} />
       <Center>
         <Heading>Mis datos</Heading>
+        <Text>{props.strName + ' ' + props.strLastname}</Text>
         <Text>Email</Text>
         <Text>{props.strEmail}</Text>
         <Text>
@@ -19,15 +25,15 @@ const UserInfo = (props: any) => {
           obtener una estimación de ingesta diaria de calorías recomentada. Esto
           dependerá de tus avances.
         </Text>
-        <Button onPress={props.function}>
+        <Button onPress={features.onPress}>
           <Icon as={EditIcon} m="$2" w="$4" h="$4" />
         </Button>
         <Text>{"Edad: " + props.numAge}</Text>
-        <Text>{"Altura: " + props.numHeigh}</Text>
+        <Text>{"Altura (cm): " + props.numHeight}</Text>
         <Text>{"Sexo: " + props.strSexo}</Text>
         <Text>{"Peso (kg): " + props.numWeight}</Text>
         <Text>{"Actividad física: " + props.strActivity}</Text>
-        <Text>{"Calorías diarias: " + props.numKcalDaily}</Text>
+        <Text>{"Calorías diarias: " + props.numDailyCalories}</Text>
       </Center>
     </View>
   );

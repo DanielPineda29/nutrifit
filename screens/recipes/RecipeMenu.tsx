@@ -21,14 +21,34 @@ import { ScrollView } from "@gluestack-ui/themed-native-base";
 import RecipeCard from "../../components/recipe/RecipeCard";
 import ImageHeading from "../../components/ImageHeading";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { getRecipes, setRecipes } from "../../src/lib/Api/features/recipesSlice";
 
 const MiComponente = () => {
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const handleScreenList = (strTime: string, title: string) => {
-    navigation.navigate("RecipesList", {strTime, title});
+
+  const handleScreenList = async (strTime: string, title: string) => {
+    try{
+      const recipesData = await dispatch(getRecipes(strTime));
+        dispatch(setRecipes(recipesData.payload));
+        navigation.navigate("RecipesList", {strTime, title});
+    } catch (error) {
+      throw new Error("Error al obtener las recetas: ", error);
+    }
   }
+
+  // const handleGetRecipes = async () => {
+  //   try{
+  //     const recipesData = await dispatch(getRecipes(strTime));
+  //       dispatch(setRecipes(recipesData.payload));
+  //       navigation.navigate("RecipesList", {strTime, title});
+  //   } catch (error) {
+  //     throw new Error("Error al obtener las recetas: ", error);
+  //   }
+  // };  
   
 
   // 'RecipesList', {strTime: 'Breakfast'}
