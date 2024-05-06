@@ -25,8 +25,6 @@ const Home = () => {
 
   const {user} = useSelector(state => state.user);
 
-  console.log('user en home ==> ', user)
-
   return (
     <View>
       <ScrollView>
