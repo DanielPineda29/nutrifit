@@ -52,6 +52,9 @@ def fnRegisterUser(data):
     try:
         print("DATA => ", data)
         hashed_password = generate_password_hash(data['strPassword'])
+        data["numAge"] = int(data["numAge"])
+        data["numHeight"] = int(data["numHeight"])
+        data["numWeight"] = int(data["numWeight"])
         daily_calories = calculate_daily_calories(data)
         objCreateUser = dbConnectUsers.insert_one({
             "strEmail": data["strEmail"],
@@ -65,8 +68,8 @@ def fnRegisterUser(data):
             "strActivity": data["strActivity"],
             "strRole": data["strRole"],
             "numDailyCalories": daily_calories,
-            "favRecipes":data["favRecipes"],
-            "favExcercises": data["favExcercises"],
+            "favRecipes":[],
+            "favExcercises": [],
             })
         objResponse = ResponseMessages.succ200.copy()
         return objResponse

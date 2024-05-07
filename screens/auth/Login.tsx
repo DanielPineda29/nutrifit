@@ -46,7 +46,6 @@ import { useDispatch } from "react-redux";
     
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const {login} = useContext(AuthContext);
     const [strEmail, setStrEmail] = useState('');
     const [strPassword, setStrPassword] = useState('');
     const [emailError, setEmailError] = useState('');
