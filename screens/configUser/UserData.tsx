@@ -1,31 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserInfo from "../../components/user/UserInfo";
 import { SafeAreaView } from "@gluestack-ui/themed";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { getUser } from "../../src/lib/Api/features/userSlice";
 
 export default function UserData() {
   const dispatch = useDispatch();
-  const {user} = useSelector(state => state.user);
+  const { user } = useSelector((state) => state.user);
+  const navigation = useNavigation();
 
-    const handleEdit = () => {
-        console.log(user);
-    }
+  useEffect(() => {
+    // Llamar a la acción getUser al montar el componente
+    dispatch(getUser(user.strEmail));
+  }, []);
+
+  const handleEdit = (id: string, title: string) => {
+    // dispatch(getUser(user.strEmail));
+    navigation.navigate("EditUser", { id, title });
+  };
 
   return (
     <SafeAreaView>
-      <UserInfo 
-        _id={user._id}
-        strName={user.strName}
-        strLastname={user.strLastname}
-        strEmail={user.strEmail}
-        numAge={user.numAge}
-        numHeight={user.numHeight}
-        strSexo={user.strSexo}
-        numWeight={user.numWeight}
-        strActivity={user.strActivity}
-        numDailyCalories={user.numDailyCalories}
-        onPress={handleEdit}
-      />
+      <UserInfo {...user} onPress={() => handleEdit(user._id,"Editar mis datos")} />
     </SafeAreaView>
   );
 }

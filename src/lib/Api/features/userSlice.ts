@@ -20,6 +20,9 @@ export const userSlice = createSlice({
         setUser: (state, action: PayloadAction<User | null>) => {
             state.user = action.payload;
           },
+        setUserEdit: (state, action: PayloadAction<User | null>) => {
+            state.user = action.payload;
+          },
         resetUser: (state) => {
             state.user = null;
         }
@@ -108,9 +111,26 @@ export const updateUser = createAsyncThunk(
                     'Content-Type':'application/json',
                 }
             });
+            console.log("Enviando datos desde updateUser", response.data);
             return response.data;
         } catch (error) {
             throw new Error('Error al editar el usuario: ' + error);
+        }
+    }
+);
+
+export const createUser = createAsyncThunk(
+    'user/createUser',
+    async (payload: User) => {
+        try {
+            const response = await Api.post('/register', payload, {
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Erro al crear el nuevo usuario: ' + error);
         }
     }
 );
@@ -134,5 +154,5 @@ export const updateUser = createAsyncThunk(
 // } 
 
 
-export const { setUser, resetUser } = userSlice.actions;
+export const { setUser, resetUser, setUserEdit } = userSlice.actions;
 export default userSlice.reducer;

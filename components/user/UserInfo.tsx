@@ -7,11 +7,11 @@ import { Button, Center, Heading, Icon, Text } from "@gluestack-ui/themed";
 import EditIcon from "@gluestack-ui/themed-native-base";
 import { User } from "../../src/lib/models/userModel";
 
-interface otherFeatures {
+interface UserInfoProps extends User {
   onPress: () => void;
 }
 
-const UserInfo = (props: User, features: otherFeatures) => {
+const UserInfo = ({onPress, ...props}: UserInfoProps) => {
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Mis datos"} />
@@ -25,8 +25,8 @@ const UserInfo = (props: User, features: otherFeatures) => {
           obtener una estimación de ingesta diaria de calorías recomentada. Esto
           dependerá de tus avances.
         </Text>
-        <Button onPress={features.onPress}>
-          <Icon as={EditIcon} m="$2" w="$4" h="$4" />
+        <Button onPress={onPress}>
+          <Icon as={EditIcon} m="$2" w="$6" h="$6" />
         </Button>
         <Text>{"Edad: " + props.numAge}</Text>
         <Text>{"Altura (cm): " + props.numHeight}</Text>

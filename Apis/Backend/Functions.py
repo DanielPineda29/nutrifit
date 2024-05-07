@@ -52,6 +52,9 @@ def fnRegisterUser(data):
     try:
         print("DATA => ", data)
         hashed_password = generate_password_hash(data['strPassword'])
+        data["numAge"] = int(data["numAge"])
+        data["numHeight"] = int(data["numHeight"])
+        data["numWeight"] = int(data["numWeight"])
         daily_calories = calculate_daily_calories(data)
         objCreateUser = dbConnectUsers.insert_one({
             "strEmail": data["strEmail"],
@@ -65,8 +68,8 @@ def fnRegisterUser(data):
             "strActivity": data["strActivity"],
             "strRole": data["strRole"],
             "numDailyCalories": daily_calories,
-            "favRecipes":data["favRecipes"],
-            "favExcercises": data["favExcercises"],
+            "favRecipes":[],
+            "favExcercises": [],
             })
         objResponse = ResponseMessages.succ200.copy()
         return objResponse
@@ -180,24 +183,45 @@ def fnUpdateUser(objIDParameter, data):
     try:
         print("ID => ", objIDParameter)
         print("DATA => ", data)
-        hashed_password = generate_password_hash(data['strPassword'])
+        data["numAge"] = int(data["numAge"])
+        data["numHeight"] = int(data["numHeight"])
+        data["numWeight"] = int(data["numWeight"])
+        daily_calories = calculate_daily_calories(data)
         objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
                                                    {"$set":{
-                                                       "strEmail": data["strEmail"],
-                                                        "strPassword": hashed_password,
                                                         "strName": data["strName"], 
                                                         "strLastname": data["strLastname"],
                                                         "numAge": data["numAge"],
-                                                        "numHeight": data["numHeight"],
                                                         "strSexo": data["strSexo"],
+                                                        "numHeight": data["numHeight"],
                                                         "numWeight": data["numWeight"],
-                                                        "strActivity": data["strActivity"],}})
+                                                        "strActivity": data["strActivity"],
+                                                        "strRole": data["strRole"],
+                                                        "numDailyCalories": daily_calories,
+                                                        }})
         objResponse = ResponseMessages.succ200.copy()
         return objResponse
     except Exception as e:
         print("\nError en fnUpdateUser: ", e)
         return jsonify(ResponseMessages.err500)
     
+# def fnUpdateEmailPw(objIDParameter, data):
+#     print("\n==============================|fnUpdateUser|==============================\n")
+#     try:
+#         print("ID => ", objIDParameter)
+#         print("DATA => ", data)
+#         if check_password_hash(objFindUser['strPassword'], data['strPassword']):
+#             hashed_password = generate_password_hash(data['strPassword'])
+#             objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
+#                                                     {"$set":{
+#                                                             "strEmail": data["strEmail"],
+#                                                             "strPassword": hashed_password,
+#                                                             }})
+#         objResponse = ResponseMessages.succ200.copy()
+#         return objResponse
+#     except Exception as e:
+#         print("\nError en fnUpdateUser: ", e)
+#         return jsonify(ResponseMessages.err500)
     
 #####################################################################################
 #

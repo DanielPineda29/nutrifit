@@ -9,8 +9,10 @@ import {
   SelectInput,
   SelectIcon,
   SelectBackdrop,
+  View,
+  Center,
 } from "@gluestack-ui/themed";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../assets/resource/iconoRegistro.jpg";
 import { VStack } from "@gluestack-ui/themed";
 import { FormControlLabel } from "@gluestack-ui/themed";
@@ -26,98 +28,165 @@ import { SelectContent } from "@gluestack-ui/themed";
 import { SelectDragIndicatorWrapper } from "@gluestack-ui/themed";
 import { SelectDragIndicator } from "@gluestack-ui/themed";
 import { SelectItem } from "@gluestack-ui/themed";
+import { listSexo, listActivitys } from "../src/lib/models/userModel";
+import ImageHeading from "../components/ImageHeading";
+import { ChevronDownIcon } from "@gluestack-ui/themed-native-base";
+import { useDispatch } from "react-redux";
+import { createUser } from "../src/lib/Api/features/userSlice";
 
 export default function Register() {
+
+  const [strEmail, setStrEmail] = useState("");
+  const [strPassword, setStrPassword] = useState("");
+  const [strName, setStrName] = useState("");
+  const [strLastname, setStrLastname] = useState("");
+  const [numAge, setNumAge] = useState("");
+  const [numHeight, setNumHeight] = useState("");
+  const [numWeight, setNumWeight] = useState("");
+  const [strSexo, setStrSexo] = useState("");
+  const [strActivity, setStrActivity ] = useState("");
+
+
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleRegisterUser = () => {
+    const data = {
+      strEmail: strEmail,
+      strPassword: strPassword,
+      strName: strName,
+      strLastname: strLastname,
+      numAge: numAge,
+      numHeight: numHeight,
+      numWeight: numWeight,
+      strSexo: strSexo,
+      strActivity: strActivity,
+      strRole: 'User',
+      favRecipes: [],
+      favExercises: [],
+    };
+    dispatch(createUser(data));
+    navigation.navigate('Login');
+  };
+
+  const handleCancel = () => {
+    navigation.navigate('Login');
+  };
+  
+
   return (
-    <ScrollView>
-      <Box w={"$full"} h={"30%"} alignSelf="center" bg="$blue300">
-        <Image w={"100%"} h={"100%"} source={Logo} alt="logo" />
-      </Box>
-
-      <Box alignSelf="center" marginTop={"$5"} w={"90%"} h={"90%"}>
-        <VStack space="md" reversed={false}>
-          <Heading size={"3xl"} alignSelf="center">
-            {"Nutrifit"}
-          </Heading>
-          <Heading size={"2xl"}>{"Nuevo registro"}</Heading>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Nombre</FormControlLabelText>
-          </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="text" placeholder="Marcos" />
-          </Input>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Apellidos</FormControlLabelText>
-          </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="text" placeholder="Estrada" />
-          </Input>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Edad</FormControlLabelText>
-          </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="text" placeholder="27" />
-          </Input>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Altura</FormControlLabelText>
-          </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="text" placeholder="174" />
-          </Input>
-
-          <FormControlLabel mb="$1">
+    <ScrollView h={"100"} w={"100"}>
+      <View>
+        <ImageHeading img={Logo} alt={"Mis datos"} />
+        <Center>
+          <FormControl minWidth="$80">
+            <FormControlLabel>
+              <FormControlLabelText>Correo</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={strEmail} onChangeText={setStrEmail} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Contraseña</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={strPassword} onChangeText={setStrPassword} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Nombre</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={strName} onChangeText={setStrName} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Apellidos</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={strLastname} onChangeText={setStrLastname} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Edad</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={numAge} onChangeText={setNumAge} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Altura (cm)</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={numHeight} onChangeText={setNumHeight} />
+            </Input>
+            <FormControlLabel>
+              <FormControlLabelText>Peso (kg)</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputField value={numWeight} onChangeText={setNumWeight} />
+            </Input>
+            <FormControlLabel>
             <FormControlLabelText>Sexo</FormControlLabelText>
-            <FormControl>
-              <Select>
-                <SelectTrigger>
-                  <SelectInput placeholder="Sexo" />
-                  
-                </SelectTrigger>
-                <SelectPortal>
-                  <SelectBackdrop />
-                  <SelectContent>
-                    <SelectDragIndicatorWrapper>
-                      <SelectDragIndicator />
-                    </SelectDragIndicatorWrapper>
-                    <SelectItem label="India" value="India" />
-                    <SelectItem label="Sri Lanka" value="Sri Lanka" />
-                    <SelectItem label="Uganda" value="Uganda" />
-                    <SelectItem label="Japan" value="Japan" />
-                  </SelectContent>
-                </SelectPortal>
-              </Select>
-            </FormControl>
           </FormControlLabel>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Email</FormControlLabelText>
+          <Select selectedValue={strSexo} onValueChange={setStrSexo}>
+            <SelectTrigger variant="outline" size="md">
+              <SelectInput placeholder="Selecciona tu sexo" />
+              <SelectIcon mr="$3">
+                <Icon as={ChevronDownIcon} />
+              </SelectIcon>
+            </SelectTrigger>
+            <SelectPortal>
+              <SelectBackdrop />
+              <SelectContent>
+                <SelectDragIndicatorWrapper>
+                  <SelectDragIndicator />
+                </SelectDragIndicatorWrapper>
+                {listSexo.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    label={option.label}
+                    onPress={() => setStrSexo(option.value)}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </SelectPortal>
+          </Select>
+          <FormControlLabel>
+            <FormControlLabelText>Actividad física</FormControlLabelText>
           </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="text" placeholder="ejemplo@email.com" />
-          </Input>
-
-          <FormControlLabel mb="$1">
-            <FormControlLabelText>Contraseña</FormControlLabelText>
-          </FormControlLabel>
-          <Input borderRadius={"$3xl"}>
-            <InputField type="password" placeholder="password" />
-          </Input>
-
-          <VStack
-            space={"sm"}
-            sx={{ justifyContent: "center", alignItems: "center" }}
-            reversed={false}
-            margin={"$5"}
-          >
-            <Button_lg />
-          </VStack>
-        </VStack>
-      </Box>
+          <Select selectedValue={strActivity} onValueChange={setStrActivity}>
+            <SelectTrigger variant="outline" size="md">
+              <SelectInput placeholder="Selecciona tu sexo" />
+              <SelectIcon mr="$3">
+                <Icon as={ChevronDownIcon} />
+              </SelectIcon>
+            </SelectTrigger>
+            <SelectPortal>
+              <SelectBackdrop />
+              <SelectContent>
+                <SelectDragIndicatorWrapper>
+                  <SelectDragIndicator />
+                </SelectDragIndicatorWrapper>
+                {listActivitys.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    label={option.label}
+                    onPress={() => setStrActivity(option.value)}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </SelectPortal>
+          </Select>
+          </FormControl>
+          <FormControl>
+            <Button_lg name="Registrarse" function={handleRegisterUser} />
+            <Button_lg name="Cancelar" function={handleCancel} />
+          </FormControl>
+        </Center>
+      </View>
     </ScrollView>
   );
 }
