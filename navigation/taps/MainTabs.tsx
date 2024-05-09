@@ -16,7 +16,7 @@ function MyTabs() {
             tabBarActiveTintColor: 'red',
         }}
         >
-            <Tab.Screen name="Home" component={Home} options={{tabBarLabel: 'Home',}}/>
+            <Tab.Screen name="HomeScreen" component={Home} options={{tabBarLabel: 'Home',}}/>
             <Tab.Screen name="Recipes" component={RecipeMenu} options={{tabBarLabel: 'Recetas', headerShown: false}} />
             <Tab.Screen name="ConfigUser" component={ConfigUser} options={{tabBarLabel: 'Configuración', headerShown: false}} />
         </Tab.Navigator>

@@ -36,7 +36,7 @@ const MiComponente = () => {
         dispatch(setRecipes(recipesData.payload));
         navigation.navigate("RecipesList", {strTime, title});
     } catch (error) {
-      throw new Error("Error al obtener las recetas: ", error);
+      throw new Error("Error al obtener las recetas: " + error);
     }
   }
 

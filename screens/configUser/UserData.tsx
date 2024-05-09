@@ -16,13 +16,19 @@ export default function UserData() {
   }, []);
 
   const handleEdit = (id: string, title: string) => {
-    // dispatch(getUser(user.strEmail));
     navigation.navigate("EditUser", { id, title });
+  };
+
+  const handleEditEmail = () => {
+    navigation.navigate("EditEmailUser");
   };
 
   return (
     <SafeAreaView>
-      <UserInfo {...user} onPress={() => handleEdit(user._id,"Editar mis datos")} />
+      <UserInfo {...user} 
+      onPress={() => handleEdit(user._id,"Editar mis datos")} 
+      onPressEmail={handleEditEmail}
+      />
     </SafeAreaView>
   );
 }

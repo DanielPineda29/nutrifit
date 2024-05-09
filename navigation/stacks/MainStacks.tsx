@@ -8,6 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FavRecipes from "../../screens/favRecipes/FavRecipes";
 import UserData from "../../screens/configUser/UserData";
 import EditUser from "../../screens/configUser/EditUser";
+import EditEmailUser from "../../screens/configUser/EditEmailUser";
+import ManageRecipes from "../../screens/recipes/manage/ManageRecipes";
+import ManageRecipesList from "../../screens/recipes/manage/ManageRecipesList";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +55,21 @@ function MyStacks() {
         <Stack.Screen
           name="EditUser"
           component={EditUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditEmailUser"
+          component={EditEmailUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ManageRecipes"
+          component={ManageRecipes}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ManageRecipesList"
+          component={ManageRecipesList}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

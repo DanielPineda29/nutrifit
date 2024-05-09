@@ -205,23 +205,23 @@ def fnUpdateUser(objIDParameter, data):
         print("\nError en fnUpdateUser: ", e)
         return jsonify(ResponseMessages.err500)
     
-# def fnUpdateEmailPw(objIDParameter, data):
-#     print("\n==============================|fnUpdateUser|==============================\n")
-#     try:
-#         print("ID => ", objIDParameter)
-#         print("DATA => ", data)
-#         if check_password_hash(objFindUser['strPassword'], data['strPassword']):
-#             hashed_password = generate_password_hash(data['strPassword'])
-#             objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
-#                                                     {"$set":{
-#                                                             "strEmail": data["strEmail"],
-#                                                             "strPassword": hashed_password,
-#                                                             }})
-#         objResponse = ResponseMessages.succ200.copy()
-#         return objResponse
-#     except Exception as e:
-#         print("\nError en fnUpdateUser: ", e)
-#         return jsonify(ResponseMessages.err500)
+def fnUpdateEmailPw(objIDParameter, data):
+    print("\n==============================|fnUpdateUser|==============================\n")
+    try:
+        print(data['strPasswordConfirmation'])
+        objFindUser = dbConnectUsers.find_one({"_id":ObjectId(objIDParameter)})
+        if check_password_hash(objFindUser['strPassword'], data['strPasswordConfirmation']):
+            hashed_password = generate_password_hash(data['strPassword'])
+            objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
+                                                    {"$set":{
+                                                            "strEmail": data["strEmail"],
+                                                            "strPassword": hashed_password,
+                                                            }})
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnUpdateEmailPw: ", e)
+        return jsonify(ResponseMessages.err500)
     
 #####################################################################################
 #

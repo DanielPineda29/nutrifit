@@ -133,6 +133,17 @@ def putUpdateUser(objIDParameter):
         print("\nError en la función putUpdateUser: ", e)
         return jsonify(ResponseMessages.err500)
 
+@app.route('/api/general/updateUserEmailPw/<objIDParameter>', methods=['PUT'])
+def putUpdateEmailPw(objIDParameter):
+    try:
+        data = request.json
+        print('DATA=> ', data)
+        objUpdateEmailPw = callFunction.fnUpdateEmailPw(objIDParameter, data)
+        return jsonify(objUpdateEmailPw)
+    except Exception as e:
+        print("\nError en la función putUpdateEmailPw: ", e)
+        return jsonify(ResponseMessages.err500)
+
 #####################################################################################
 #
 #                               Rutas DELETE 
