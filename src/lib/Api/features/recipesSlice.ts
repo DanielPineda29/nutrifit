@@ -59,11 +59,13 @@ export const getRecipes = createAsyncThunk(
             console.log('API Response getRecipes: ', response.data);
             return response.data
         } catch (error) {
-            throw new Error("Error al obtener la receta" + error);
+            throw new Error("Error al obtener la recetas: " + error);
         }
     }
 );
 
+
+//GET RECIPE =>
 export const getRecipe = createAsyncThunk(
     'recipe/getRecipe',
     async (idRecipe: string) => {
@@ -73,6 +75,24 @@ export const getRecipe = createAsyncThunk(
             return response.data;
         } catch (error) {
             throw new Error("Error al obtener la receta" + error);
+        }
+    }
+);
+
+//CREATE RECIPE =>
+export const createRecipe = createAsyncThunk(
+    'recipe/createRecipe',
+    async (idRecipe: string) => {
+        try {
+            const response = await Api.post(`/createRecipe/${idRecipe}`,{
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+            console.log('API Response createRecipe: ', response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error("Error al crear la receta: " + error);
         }
     }
 );

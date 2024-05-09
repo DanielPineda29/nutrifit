@@ -9,21 +9,23 @@ import { User } from "../../src/lib/models/userModel";
 
 interface UserInfoProps extends User {
   onPress: () => void;
+  onPressEmail: () => void;
 }
 
-const UserInfo = ({onPress, ...props}: UserInfoProps) => {
+const UserInfo = ({onPress, onPressEmail, ...props}: UserInfoProps) => {
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Mis datos"} />
       <Center>
         <Heading>Mis datos</Heading>
         <Text>{props.strName + ' ' + props.strLastname}</Text>
-        <Text>Email</Text>
-        <Text>{props.strEmail}</Text>
+        
         <Text>
           Recuerda actualizar tus datos personales cada cierto tiempo para
           obtener una estimación de ingesta diaria de calorías recomentada. Esto
-          dependerá de tus avances.
+          dependerá de tus avances. Recuerda que esto no sustituye a un 
+          profesional de la salud, por lo que son solo datos de referencia y 
+          deberás mantenerte en contacto con tu nutriologo de confianza.
         </Text>
         <Button onPress={onPress}>
           <Icon as={EditIcon} m="$2" w="$6" h="$6" />
@@ -34,6 +36,12 @@ const UserInfo = ({onPress, ...props}: UserInfoProps) => {
         <Text>{"Peso (kg): " + props.numWeight}</Text>
         <Text>{"Actividad física: " + props.strActivity}</Text>
         <Text>{"Calorías diarias: " + props.numDailyCalories}</Text>
+        <Heading>Cambiar correo y contraseña</Heading>
+        <Button onPress={onPressEmail}>
+          <Icon as={EditIcon} m="$2" w="$6" h="$6" />
+        </Button>
+        <Text>Email</Text>
+        <Text>{props.strEmail}</Text>
       </Center>
     </View>
   );

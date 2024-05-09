@@ -52,6 +52,14 @@ export const userSlice = createSlice({
             builder.addCase(updateUser.rejected, (state) => {
                 state.userResponse = 400;
             });
+        //DELETE USER =>
+            builder.addCase(deleteUser.fulfilled, (state, action) => {
+                state.userResponse = 200;
+                state.user = action.payload || initialState.user;
+            });
+            builder.addCase(deleteUser.rejected, (state) => {
+                state.userResponse = 400;
+            })
     },
 });
 
@@ -102,6 +110,22 @@ export const getUser = createAsyncThunk(
     }
 );
 
+export const createUser = createAsyncThunk(
+    'user/createUser',
+    async (payload: User) => {
+        try {
+            const response = await Api.post('/register', payload, {
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Erro al crear el nuevo usuario: ' + error);
+        }
+    }
+);
+
 export const updateUser = createAsyncThunk(
     'user/updateUser',
     async ({id, payload: User}:{id: String, payload: User}) => {
@@ -119,21 +143,41 @@ export const updateUser = createAsyncThunk(
     }
 );
 
-export const createUser = createAsyncThunk(
-    'user/createUser',
-    async (payload: User) => {
-        try {
-            const response = await Api.post('/register', payload, {
+export const updateEmailPw = createAsyncThunk(
+    'user/updateEmailPw',
+    async ({id, data}:{id:string, data: Object}) =>  {
+        try{
+            console.log("Datos recibidos en updateEmailPw: ", data);
+            const response = await Api.put(`/updateUserEmailPw/${id}`, data, {
                 headers:{
                     'Content-Type':'application/json',
                 }
             });
+            console.log("Enviando datos desde updateEmailPw: ", response.data);
             return response.data;
         } catch (error) {
-            throw new Error('Erro al crear el nuevo usuario: ' + error);
+            throw new Error('Error al actualizar el correo o contraseña: ' + error);
         }
     }
 );
+
+export const deleteUser = createAsyncThunk(
+    'user/deleteUser',
+    async (id: string) => {
+        try {
+            const response = await Api.put(`/deleteUser/${id}`, {
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            });
+            console.log("Enviando datos desde deleteUser: ", response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al actualizar el correo o contraseña: ' + error);
+        }
+    }
+);
+
 
 //GET USER =>
 // export const getUser = async (strEmail: string) => {
