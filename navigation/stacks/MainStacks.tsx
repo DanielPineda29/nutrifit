@@ -11,6 +11,7 @@ import EditUser from "../../screens/configUser/EditUser";
 import EditEmailUser from "../../screens/configUser/EditEmailUser";
 import ManageRecipes from "../../screens/recipes/manage/ManageRecipes";
 import ManageRecipesList from "../../screens/recipes/manage/ManageRecipesList";
+import NewRecipe from "../../screens/recipes/manage/NewRecipe";
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,11 @@ function MyStacks() {
         <Stack.Screen
           name="ManageRecipesList"
           component={ManageRecipesList}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NewRecipe"
+          component={NewRecipe}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

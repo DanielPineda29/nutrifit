@@ -12,9 +12,6 @@ import { ButtonText } from "@gluestack-ui/themed";
 export default function ManageRecipesCard(props: any) {
   return (
     <View>
-      <ImageHeading img={IMAGE_REGISTER} alt="image_register" />
-
-        
       <Center>
       <HStack  p='$12'  alignItems='center'  borderColor='$backgroundLight300'
           borderWidth={1} borderRadius="$lg" $dark-borderColor="$backgroundDark700">
