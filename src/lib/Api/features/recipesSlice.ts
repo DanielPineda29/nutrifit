@@ -19,6 +19,8 @@ const initialState: RecipeInitialState = {
     recipeResponse: null,
 };
 
+
+
 export const recipeSlice = createSlice({
     name:'recipe',
     initialState: initialState,
@@ -133,7 +135,7 @@ export const createRecipe = createAsyncThunk(
 //UPDATE RECIPE =>
 export const updateRecipe = createAsyncThunk(
     'recipe/updateRecipe',
-    async ({idRecipe, Recipe}:{idRecipe:String, Recipe: Recipe}) => {
+    async ({idRecipe, payload: Recipe}:{idRecipe:String, payload: Recipe}) => {
         console.log('Recipe antes de enviar al servidor:', Recipe);
         try {
             const response = await Api.put(`/updateRecipe/${idRecipe}`, Recipe, {

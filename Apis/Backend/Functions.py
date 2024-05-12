@@ -167,8 +167,8 @@ def fnGetRecipes(strTime):
         recipes = []
         for recipe in objFindRecipes:
             recipe["_id"] = str(recipe["_id"])
-            recipe["ingredients"] = [{**ingredient, "_id": str(ingredient["_id"])} for ingredient in recipe.get("ingredients", [])]
-            recipe["preparation"] = [{**step, "_id": str(step["_id"])} for step in recipe.get("preparation", [])]
+            # recipe["ingredients"] = [{**ingredient, "_id": str(ingredient["_id"])} for ingredient in recipe.get("ingredients", [])]
+            # recipe["preparation"] = [{**step, "_id": str(step["_id"])} for step in recipe.get("preparation", [])]
             recipes.append(recipe)
         objResponse = ResponseMessages.succ200.copy()
         objResponse = recipes
@@ -250,6 +250,25 @@ def fnUpdateEmailPw(objIDParameter, data):
         return objResponse
     except Exception as e:
         print("\nError en fnUpdateEmailPw: ", e)
+        return jsonify(ResponseMessages.err500)
+
+def fnUpdateRecipe(objIDParameter, data):
+    print("\n==============================|fnUpdateUser|==============================\n")
+    try:
+        data["numKcal"] = int(data["numKcal"])
+        objUpdateRecipe = dbConnectRecipes.update_one({"_id":ObjectId(objIDParameter)},
+                                                      {"$set":{
+                                                          "strNameFood":data["strNameFood"],
+                                                          "ingredients":data["ingredients"],
+                                                          "preparation":data["preparation"],
+                                                          "numKcal":data["numKcal"],
+                                                          "strTime":data["strTime"]
+                                                      }}
+                                                      )
+        objResponse = ResponseMessages.succ200.copy()
+        return objResponse
+    except Exception as e:
+        print("\nError en fnUpdateRecipe: ", e)
         return jsonify(ResponseMessages.err500)
     
 #####################################################################################

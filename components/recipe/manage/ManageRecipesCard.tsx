@@ -21,7 +21,7 @@ export default function ManageRecipesCard(props: any) {
             </Heading>
           </Box>
           <ButtonGroup space='md'>
-            <Button variant='outline' py='$2.5' action="secondary">
+            <Button variant='outline' py='$2.5' action="secondary" onPress={props.onPressUpdate}>
               <ButtonText  fontSize='$sm' fontWeight='$medium'
               >
                 Editar
