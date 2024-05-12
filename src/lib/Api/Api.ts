@@ -1,7 +1,7 @@
 import {default as axios} from 'axios';
 
 const protocol = 'http';
-const domainName = '192.168.0.24';
+const domainName = '192.168.1.53';
 const port = '9005';
 
 export const Api = axios.create({

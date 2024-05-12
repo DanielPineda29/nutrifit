@@ -78,16 +78,39 @@ def fnRegisterUser(data):
         return jsonify(ResponseMessages.err500)
     
 def fnPostRecipe(data):
+    print('data que ingreso en fnPostRecipe: ', data)
     try:
+        # ingredients = []
+        # for ingredient in data["ingredients"]:
+        #     ingredient_copy = {
+        #         "_id": ObjectId(),
+        #         "strIngredient": ingredient["strIngredient"]
+        #     }
+        #     ingredients.append(ingredient_copy)
+        
+        # preparation = []
+        # for step in data["preparation"]:
+        #     step_copy = {
+        #         "_id": ObjectId(),
+        #         "strPreparation": step["strPreparation"]
+        #     }
+        #     preparation.append(step_copy)
+        
+        data['numKcal'] = int(data['numKcal'])
+        
+        
+        
         objCreateRecipe = dbConnectRecipes.insert_one({
             "strNameFood": data["strNameFood"],
+            "ingredients": data["ingredients"],
+            "preparation": data["preparation"],
             "numKcal": data["numKcal"],
-            "strTime": data["strTime"]
+            "strTime": data["strTime"],
         })
-        objCreateRecipe = ResponseMessages.suc200.copy()
+        objCreateRecipe = ResponseMessages.succ200.copy()
         return objCreateRecipe
     except Exception as e:
-        print("\nError en fnRegisterUser: ", e)
+        print("\nError en fnPostRecipe: ", e)
         return jsonify(ResponseMessages.err500)
     
 def fnPostFavRecipe(idUser, idRecipe):
@@ -140,12 +163,18 @@ def fnGetRecipes(strTime):
     print("\n==============================|fnGetRecipes|==============================\n")
     try:
         objFindRecipes = dbConnectRecipes.find({"strTime":strTime})
-        objFindRecipes = [{**doc, "_id": str(doc["_id"])} for doc in objFindRecipes]
+        # objFindRecipes = [{**doc, "_id": str(doc["_id"])} for doc in objFindRecipes]
+        recipes = []
+        for recipe in objFindRecipes:
+            recipe["_id"] = str(recipe["_id"])
+            recipe["ingredients"] = [{**ingredient, "_id": str(ingredient["_id"])} for ingredient in recipe.get("ingredients", [])]
+            recipe["preparation"] = [{**step, "_id": str(step["_id"])} for step in recipe.get("preparation", [])]
+            recipes.append(recipe)
         objResponse = ResponseMessages.succ200.copy()
-        objResponse = objFindRecipes
+        objResponse = recipes
         return objResponse
     except Exception as e:
-        print("\nError en fnGetUsers: ", e)
+        print("\nError en fnGetRecipes: ", e)
         return jsonify(ResponseMessages.err500)
     
 def fnGetRecipe(paramID):

@@ -82,9 +82,10 @@ export const getRecipe = createAsyncThunk(
 //CREATE RECIPE =>
 export const createRecipe = createAsyncThunk(
     'recipe/createRecipe',
-    async (idRecipe: string) => {
+    async (payload: Recipe) => {
+        console.log('payload antes de enviar al servidor: ', payload);
         try {
-            const response = await Api.post(`/createRecipe/${idRecipe}`,{
+            const response = await Api.post('/createRecipe', payload, {
                 headers: {
                     'Content-Type':'application/json'
                 }

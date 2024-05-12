@@ -12,12 +12,14 @@ export default function ManageRecipesList() {
   const { recipes } = useSelector((state) => state.recipe);
   const navigation = useNavigation();
   const route = useRoute();
-  const time = route.params?.strTime;
+  const strTime = route.params?.strTime;
   const title = route.params?.title;
 
   const handleAddRecipe = () => {
-    navigation.navigate('NewRecipe');
+    navigation.navigate('NewRecipe',{strTime});
   };
+
+  console.log('strTime listarecetas: ', strTime);
 
   return (
     <SafeAreaView>
