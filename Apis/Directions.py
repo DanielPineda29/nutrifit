@@ -34,7 +34,7 @@ def postCreateRecipe():
         objRecipe = callFunction.fnPostRecipe(data)
         return jsonify(objRecipe)
     except Exception as e:
-        print("\nError en postRegisterUser: ",e)
+        print("\nError en postCreateRecipe: ",e)
         return jsonify(ResponseMessages.err500)
     
 
@@ -82,7 +82,7 @@ def getRecipes(paramTime):
     try:
         print("\n==============================|getRecipes|==============================\n")
         objRecipes = callFunction.fnGetRecipes(paramTime)
-        json_util.dumps(objRecipes)
+        # json_util.dumps(objRecipes)
         return jsonify(objRecipes)
     except Exception as e:
         print("\nError en getRecipes: ", e)
