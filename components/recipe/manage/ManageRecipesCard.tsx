@@ -33,6 +33,7 @@ export default function ManageRecipesCard(props: any) {
               borderColor='$success700'
               $hover-bg='$success800'
               $active-bg='$success700'
+              onPress={props.onPress} 
             >
               <ButtonText  fontSize='$sm' fontWeight='$medium'>
                 Borrar
@@ -41,7 +42,6 @@ export default function ManageRecipesCard(props: any) {
           </ButtonGroup>
         </HStack>
       </Center>
-
     </View>
   );
 }

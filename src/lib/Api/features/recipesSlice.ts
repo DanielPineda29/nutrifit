@@ -45,6 +45,38 @@ export const recipeSlice = createSlice({
         builder.addCase(getRecipes.rejected, (state) => {
             state.recipeResponse = 400;
         });
+        //GET RECIPE =>
+            builder.addCase(getRecipe.fulfilled, (state, action) => {
+                state.recipeResponse = 200;
+                state.recipe = action.payload || initialState.recipe;
+            });
+            builder.addCase(getRecipe.rejected, (state) => {
+                state.recipeResponse = 400;
+            });
+        //CREATE RECIPE =>
+            builder.addCase(createRecipe.fulfilled, (state, action) => {
+                state.recipeResponse = 200;
+                state.recipe = action.payload || initialState.recipe;
+            });
+            builder.addCase(createRecipe.rejected, (state) => {
+                state.recipeResponse = 400;
+            });
+        //UPDATE RECIPE =>
+            builder.addCase(updateRecipe.fulfilled, (state, action) => {
+                state.recipeResponse = 200;
+                state.recipe = action.payload || initialState.recipe;
+            });
+            builder.addCase(updateRecipe.rejected, (state) => {
+                state.recipeResponse = 400;
+            });
+        //UPDATE RECIPE =>
+            builder.addCase(deleteRecipe.fulfilled, (state, action) => {
+                state.recipeResponse = 200;
+                state.recipe = action.payload || initialState.recipe;
+            });
+            builder.addCase(deleteRecipe.rejected, (state) => {
+                state.recipeResponse = 400;
+            });
     },
 });
 
@@ -94,6 +126,44 @@ export const createRecipe = createAsyncThunk(
             return response.data;
         } catch (error) {
             throw new Error("Error al crear la receta: " + error);
+        }
+    }
+);
+
+//UPDATE RECIPE =>
+export const updateRecipe = createAsyncThunk(
+    'recipe/updateRecipe',
+    async ({idRecipe, Recipe}:{idRecipe:String, Recipe: Recipe}) => {
+        console.log('Recipe antes de enviar al servidor:', Recipe);
+        try {
+            const response = await Api.put(`/updateRecipe/${idRecipe}`, Recipe, {
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+            console.log('API Response updateRecipe: ', response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error("Error al actualizar la receta: " + error);
+        }
+    }
+);
+
+//DELETE RECIPE =>
+export const deleteRecipe = createAsyncThunk(
+    'recipe/deleteRecipe',
+    async (idRecipe: string) => {
+        console.log('ID de la receta a eliminar=> ', idRecipe);
+        try {
+            const response = await Api.delete(`/deleteRecipe/${idRecipe}`,{
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+            console.log('API Reponse deleteRecipe: ', response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error("Error al eliminar la receta: " + error);
         }
     }
 );
