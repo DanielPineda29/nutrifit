@@ -20,14 +20,17 @@ const MenuUser = () => {
       navigation.navigate('Login');
     };
 
+    const handleFavRecipes = (idUser: string) => {
+      navigation.navigate('FavRecipes', {idUser})
+    }
+
   return (
     <View>
       <ImageHeading img={IMAGE} alt={"Datos de usuario"} />
       <Heading>Configuración</Heading>
       <Button_lg name={"Mis datos"} function={ () => navigation.navigate('UserInfo') } />
       <Heading>Favoritos</Heading>
-      <Button_lg name={"Mis recetas favoritas"} function={ () => navigation.navigate('FavRecipes') } />
-      <Button_lg name={"Mis ejercicios favoritos"} function={ () => navigation.navigate('FavRecipes') } />
+      <Button_lg name={"Mis recetas favoritas"} function={ () => handleFavRecipes(user._id) } />
       {user.strRole === 'Admin' && (
           <>
             <Heading>Administración</Heading>
