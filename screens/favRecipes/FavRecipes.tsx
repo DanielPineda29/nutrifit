@@ -37,7 +37,7 @@ const FavRecipes = () => {
         <Heading>Mis recetas favoritas</Heading>
 
         {recipes.map((item) => (
-          <FavRecipeCard key={item._id} textHeading={item.strNameFood} />
+          <FavRecipeCard key={item._id} textHeading={item.strNameFood} img={item.image}/>
         ))}
       </View>
     </ScrollView>
