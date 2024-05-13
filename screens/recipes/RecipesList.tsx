@@ -3,13 +3,14 @@ import {
   Heading,
   SafeAreaView,
   ScrollView,
+  Box
 } from "@gluestack-ui/themed";
 import React from "react";
 import { View, Text } from "react-native";
 import RecipeList from "../../components/recipe/RecipeList";
 import ImageHeading from "../../components/ImageHeading";
 
-import Breakfast from "../../assets/resource/logo.jpg";
+import Breakfast from "../../assets/resource/general2.jpg";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useEffect, useState } from "react";
@@ -69,21 +70,26 @@ const RecipesList = () => {
     <SafeAreaView>
       <ScrollView w={"$full"} h={"$full"}>
         <ImageHeading img={Breakfast} alt={"Encabezado desayunos"} />
+        
         <Center>
-          <Heading>{title}</Heading>
+          <Heading size="3xl" fontSize={"$4xl"} >{title}</Heading>
         </Center>
+        
         {recipes.map((item) => (
+          <Box  w={390}>
           <RecipeList
-            key={item._id}
-            img={Breakfast}
-            alt={"Nombre comida"}
-            strNameFood={item.strNameFood}
-            numKcal={item.numKcal}
-            function={
-              // navigation.navigate("RecipesInfo", { recipeID: item._id })
-              () => handleRecipe(item._id)
-            }
-          />
+              key={item._id}
+              img={Breakfast}
+              alt={"Nombre comida"}
+              strNameFood={item.strNameFood}
+              numKcal={item.numKcal}
+              function={
+                // navigation.navigate("RecipesInfo", { recipeID: item._id })
+                () => handleRecipe(item._id)
+              }
+            />
+          </Box>
+          
         ))}
       </ScrollView>
     </SafeAreaView>

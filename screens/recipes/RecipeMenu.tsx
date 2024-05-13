@@ -16,7 +16,11 @@ import {
 import React from "react";
 import { View, Text } from "react-native";
 
-import Portada from "../../assets/resource/iconoRegistro.jpg";
+import Portada from "../../assets/resource/Recetario.jpg";
+import Desayuno from "../../assets/resource/Desayuno.jpg";
+import Comida from "../../assets/resource/Comida.jpg";
+import Cena from "../../assets/resource/Cena.png";
+import Colacion from "../../assets/resource/Colacion.jpg";
 import { ScrollView } from "@gluestack-ui/themed-native-base";
 import RecipeCard from "../../components/recipe/RecipeCard";
 import ImageHeading from "../../components/ImageHeading";
@@ -54,6 +58,7 @@ const MiComponente = () => {
   // 'RecipesList', {strTime: 'Breakfast'}
 
   return (
+    <Box bgColor="#FFFAFA">
     <SafeAreaView>
       <ScrollView w={"full"} h={"full"}>
         <ImageHeading img={Portada} alt={"Encabezado recetas"} />
@@ -63,36 +68,36 @@ const MiComponente = () => {
         </Center> */}
         </VStack>
         <Center>
-          <Heading>Recetario</Heading>
+          <Heading>RECETARIO</Heading>
         </Center>
         <Center>
           <RecipeCard
-            bgColor={"$green300"}
-            img={Portada}
+            bgColor={"#ADD8E6"}
+            img={Desayuno}
             textHeading={"Desayunos"}
             text={"Comienza tu día con un festin de delicias matutinas."}
             buttonText={"Ver desayunos"}
             onClick={() => handleScreenList("Breakfast", "Desayunos")}
           />
           <RecipeCard
-            bgColor={"$yellow300"}
-            img={Portada}
+            bgColor={"#ADD8E6"}
+            img={Comida}
             textHeading={"Comidas"}
             text={"Saborea la excelencia en cada bocado."}
             buttonText={"Ver comidas"}
             onClick={() => handleScreenList("Meals", "Comidas")}
           />
           <RecipeCard
-            bgColor={"$primary300"}
-            img={Portada}
+            bgColor={"#ADD8E6"}
+            img={Cena}
             textHeading={"Cenas"}
             text={"Concluye tu día con una cena que alimenta el alma."}
             buttonText={"Ver cenas"}
             onClick={() => handleScreenList("Dinner", "Cenas")}
           />
           <RecipeCard
-            bgColor={"$lime300"}
-            img={Portada}
+            bgColor={"#ADD8E6"}
+            img={Colacion}
             textHeading={"Colaciones"}
             text={
               "Revitaliza tu día con un refrigerio que despierta tus sentidos."
@@ -103,6 +108,7 @@ const MiComponente = () => {
         </Center>
       </ScrollView>
     </SafeAreaView>
+    </Box>
   );
 };
 

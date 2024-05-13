@@ -8,7 +8,9 @@ const ImageHeading = (props: any) => {
     //     <Image w={"100%"} h={"100%"} source={props.img} alt="logo" />
     //   </Box>
     <Center>
-      <Image size="2xl" source={props.img} alt={props.alt} />
+      <Image size="2xl" source={props.img} alt={props.alt }
+      style={{ width: 350, height: 200, marginTop: 70, borderRadius: 10 }}
+      />
     </Center>
   );
 };
