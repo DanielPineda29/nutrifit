@@ -82,7 +82,6 @@ def getUser(strEmail):
         objUser = callFunction.fnGetUser(strEmail)
         json_util.dumps(objUser)
         print("Información del usuario", objUser)
-        #return Response(objUser, mimetype="application/json")
         return jsonify(objUser)
     except Exception as e:
         print("\nError en getUser: ", e)
@@ -93,7 +92,6 @@ def getRecipes(paramTime):
     try:
         print("\n==============================|getRecipes|==============================\n")
         objRecipes = callFunction.fnGetRecipes(paramTime)
-        # json_util.dumps(objRecipes)
         return jsonify(objRecipes)
     except Exception as e:
         print("\nError en getRecipes: ", e)
@@ -192,11 +190,10 @@ def deleteRecipe(recipeID):
         print("\nError en deleteUser: ",e)
         return jsonify(ResponseMessages.err500)
 
-@app.route('/api/general/deleteFavRecipe/<userID>', methods=['DELETE'])
-def deleteFavRecipe(userID):
+@app.route('/api/general/deleteFavRecipe/<userID>/<recipeID>', methods=['DELETE'])
+def deleteFavRecipe(userID, recipeID):
     try:
-        data = request.json
-        objDeleteFavRecipe = callFunction.fnDeleteFavRecipe(userID, data)
+        objDeleteFavRecipe = callFunction.fnDeleteFavRecipe(userID, recipeID)
         return jsonify(objDeleteFavRecipe)
     except Exception as e:
         print("\nError en deleteUser: ",e)
