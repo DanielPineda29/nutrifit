@@ -13,6 +13,7 @@ interface CardProps {
     // text: string;
     // buttonText: string;
     // onClick: () => void;
+    img: string;
   }
 
 const FavRecipeCard: React.FC<CardProps> = (props) => {
@@ -24,7 +25,7 @@ const FavRecipeCard: React.FC<CardProps> = (props) => {
             width="$full"
             borderRadius="$md"
             source={{
-              uri: "https://images.unsplash.com/photo-1595231712325-9fedecef7575?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D",
+              uri: props.img
             }}
             alt="Imagen"
           />
