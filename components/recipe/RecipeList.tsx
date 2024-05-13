@@ -10,10 +10,12 @@ import {
   Center,
   Box
 } from "@gluestack-ui/themed";
+import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
 
 const RecipeList = (props: any) => {
+
   return (
     <Card p="$6" borderRadius={"$lg"} maxWidth={460} m={"$3"} backgroundColor={"#ADD8E6"}>
       <HStack>

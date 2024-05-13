@@ -21,7 +21,7 @@ export default function ManageRecipesCard(props: any) {
             </Heading>
           </Box>
           <ButtonGroup space='md'>
-            <Button variant='outline' py='$2.5' action="secondary">
+            <Button variant='outline' py='$2.5' action="secondary" onPress={props.onPressUpdate}>
               <ButtonText  fontSize='$sm' fontWeight='$medium'
               >
                 Editar
@@ -33,6 +33,7 @@ export default function ManageRecipesCard(props: any) {
               borderColor='$success700'
               $hover-bg='$success800'
               $active-bg='$success700'
+              onPress={props.onPress} 
             >
               <ButtonText  fontSize='$sm' fontWeight='$medium'>
                 Borrar
@@ -41,7 +42,6 @@ export default function ManageRecipesCard(props: any) {
           </ButtonGroup>
         </HStack>
       </Center>
-
     </View>
   );
 }
