@@ -36,6 +36,17 @@ def postCreateRecipe():
     except Exception as e:
         print("\nError en postCreateRecipe: ",e)
         return jsonify(ResponseMessages.err500)
+
+
+@app.route('/api/general/addFavRecipe/<objIDParameter>', methods=['POST'])
+def postFavRecipe(objIDParameter):
+    try:
+        data = request.json
+        objRecipe = callFunction.fnPostFavRecipe(objIDParameter, data)
+        return jsonify(objRecipe)
+    except Exception as e:
+        print("\nError en postCreateRecipe: ",e)
+        return jsonify(ResponseMessages.err500)
     
 
 #####################################################################################
@@ -100,10 +111,10 @@ def getRecipe(paramID):
         print("\nError en getRecipe: ",e)
         return jsonify(ResponseMessages.err500)
     
-@app.route('/api/general/favRecipe/<idUser>', methods=['GET'])
+@app.route('/api/general/favRecipes/<idUser>', methods=['GET'])
 def getFavRecipe(idUser):
     try:
-        objFavRecipe = callFunction.fnGetFavRecipe(idUser)
+        objFavRecipe = callFunction.fnGetFavRecipes(idUser)
         json_util.dumps(objFavRecipe)
         return jsonify(objFavRecipe)
     except Exception as e:
@@ -175,8 +186,18 @@ def deleteUser(object_id):
 @app.route('/api/general/deleteRecipe/<recipeID>', methods=['DELETE'])
 def deleteRecipe(recipeID):
     try:
-        objDeleteUser = callFunction.fnDeleteRecipe(recipeID)
+        objDeleteRecipe = callFunction.fnDeleteRecipe(recipeID)
         return jsonify(objDeleteUser)
+    except Exception as e:
+        print("\nError en deleteUser: ",e)
+        return jsonify(ResponseMessages.err500)
+
+@app.route('/api/general/deleteFavRecipe/<userID>', methods=['DELETE'])
+def deleteFavRecipe(userID):
+    try:
+        data = request.json
+        objDeleteFavRecipe = callFunction.fnDeleteFavRecipe(userID, data)
+        return jsonify(objDeleteFavRecipe)
     except Exception as e:
         print("\nError en deleteUser: ",e)
         return jsonify(ResponseMessages.err500)
