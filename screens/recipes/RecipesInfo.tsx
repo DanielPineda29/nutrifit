@@ -14,39 +14,9 @@ const RecipesInfo = () => {
 
   const route = useRoute();
   const navigation = useNavigation();
-  //const recipeID = route.params?.recipeID;
-  //const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
 
   const {recipe} = useSelector(state => state.recipe);
   const dispatch = useDispatch();
-
-  /*
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://192.168.0.15:9005/api/general/recipe/${recipeID}`);
-        setRecipe(response.data[0]);
-        console.log('recipe:', response.data[0]);
-      } catch (error) {
-        console.error('Error fetching recipe:', error);
-      }
-    };
-  
-    fetchData();
-  }, [recipeID]);
-  */
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try{
-  //       const recipeData = await getRecipe(recipeID); 
-  //       setRecipe(recipeData);
-  //     } catch (error) {
-  //       console.error("Error en obtener la receta: ", error);
-  //     }
-  //   };
-  //   fetchData();
-  // },[recipeID]);
 
   const handleReturn = async () => {
     dispatch(resetRecipe());
@@ -58,6 +28,7 @@ const RecipesInfo = () => {
       <ImageHeading img={Imagen} alt={"Imagen"} />
       {recipe && (
         <RecipeInfo
+          key={recipe._id}
           recipe={recipe}
         />
       )}

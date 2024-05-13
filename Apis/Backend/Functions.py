@@ -80,25 +80,7 @@ def fnRegisterUser(data):
 def fnPostRecipe(data):
     print('data que ingreso en fnPostRecipe: ', data)
     try:
-        # ingredients = []
-        # for ingredient in data["ingredients"]:
-        #     ingredient_copy = {
-        #         "_id": ObjectId(),
-        #         "strIngredient": ingredient["strIngredient"]
-        #     }
-        #     ingredients.append(ingredient_copy)
-        
-        # preparation = []
-        # for step in data["preparation"]:
-        #     step_copy = {
-        #         "_id": ObjectId(),
-        #         "strPreparation": step["strPreparation"]
-        #     }
-        #     preparation.append(step_copy)
-        
         data['numKcal'] = int(data['numKcal'])
-        
-        
         
         objCreateRecipe = dbConnectRecipes.insert_one({
             "strNameFood": data["strNameFood"],
@@ -112,18 +94,6 @@ def fnPostRecipe(data):
     except Exception as e:
         print("\nError en fnPostRecipe: ", e)
         return jsonify(ResponseMessages.err500)
-    
-# def fnPostFavRecipe(idUser, idRecipe):
-#     try:
-#         objCreateFavRecipe = dbConnectFavRecipes.insert_one({
-#             "idUser": idUser,
-#             "idRecipes": [{"_idRecipe": idRecipe}]
-#         })
-#         objCreateFavRecipe = ResponseMessages.succ200.copy()
-#         return objCreateFavRecipe
-#     except Exception as e:
-#         print("\nError en fnPostFavRecipe: ",e)
-#         return jsonify(ResponseMessages.err500)
 
 def fnPostFavRecipe(idUser, data):
     try:
@@ -132,10 +102,8 @@ def fnPostFavRecipe(idUser, data):
             {"_id": ObjectId(idUser)},
             {"$push": {"favRecipes": {"_id": data['_id'], "flagIcon": True}}}
         )
-        # Si la actualización es exitosa, devuelve un mensaje de éxito
         return ResponseMessages.succ200.copy()
     except Exception as e:
-        # Si ocurre un error durante la actualización, imprime el error y devuelve un mensaje de error
         print("\nError en fnPostFavRecipe: ", e)
         return ResponseMessages.err500.copy()
 
@@ -219,23 +187,6 @@ def fnGetFavRecipes(idUser):
         return favRecipes_complete
     except Exception as e :
         return jsonify(ResponseMessages.err500)
-
-# def fnGetFavRecipes(idUser):
-#     try:
-#         user = dbConnectUsers.find_one(
-#             {'_id': ObjectId(idUser)},
-#             {"favRecipes": 1, "_id": 0}  # Proyectar solo el campo favRecipes y excluir el campo _id
-#         )
-#         if user and user.get("favRecipes"):  # Verificar si existe el usuario y si favRecipes tiene elementos
-#             fav_recipes = user["favRecipes"]
-#             for recipe in fav_recipes:
-#                 recipe["_id"] = str(recipe["_id"])  # Convertir el _id de cada receta a string
-#             return jsonify(fav_recipes)
-#         else:
-#             return jsonify([])  # Devolver una lista vacía si no hay recetas favoritas o el usuario no existe
-#     except Exception as e:
-#         print("Error:", e)
-#         return jsonify(ResponseMessages.err500)
 
 
 
@@ -337,12 +288,11 @@ def fnDeleteRecipe(objIDParameter):
         print("\nError en fnDeleteRecipe: ",e)
         return jsonify(ResponseMessages.err500)
     
-def fnDeleteFavRecipe(objIDParameter, data):
+def fnDeleteFavRecipe(objIDParameter, recipeID):
     try:
-        idRecipe = data['_id']
         objDeleteFavRecipe = dbConnectUsers.update_one(
-            {"_id": ObjectId(objIDParameter), "favRecipes._id": idRecipe},
-            {"$pull": {"favRecipes": {"_id": idRecipe}}}
+            {"_id": ObjectId(objIDParameter), "favRecipes._id": recipeID},
+            {"$pull": {"favRecipes": {"_id": recipeID}}}
         )
         objResponse = ResponseMessages.succ200
         return objResponse

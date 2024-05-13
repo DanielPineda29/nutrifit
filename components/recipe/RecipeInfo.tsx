@@ -14,20 +14,34 @@ import React from "react";
 import { View } from "react-native";
 import { Recipe } from "../../src/lib/models/recipeModel";
 import { useDispatch, useSelector } from "react-redux";
-// import { AddIcon } from "@gluestack-ui/icons";
+import { deleteFavRecipe, getUser, postFavRecipe } from "../../src/lib/Api/features/userSlice";
 
 const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const idUser = user._id;
+  const idRecipe = recipe._id;
 
   const isFavorite = () => {
-    // Verificar si la receta actual es favorita para el usuario
-    return user.favRecipes.some((favRecipe) => favRecipe._id === recipe._id);
+    return user && user.favRecipes && user.favRecipes.some((favRecipe) => favRecipe._id === recipe._id);
   };
+  
+
+  console.log('user: ', user);
+  console.log('favRecipes: ', user.favRecipes);
+  console.log('id recipe: ', recipe._id);
 
   const onPressFavorite = () => {
-    // Lógica para manejar la acción de agregar/quitar una receta de favoritos
-    // Aquí debes llamar a una función para agregar/quitar la receta de favoritos
+    if (isFavorite()) {
+      console.log("idRecipe onPressFavorite: ", idRecipe);
+      console.log("idUser onPressFavorite: ", idUser);
+      
+      dispatch(deleteFavRecipe({ idUser, idRecipe }));
+      dispatch(getUser(user.strEmail));
+    } else {
+      dispatch(postFavRecipe({ idUser: user._id, payload: { _id: recipe._id } }));
+      dispatch(getUser(user.strEmail));
+    }
   };
 
   const favoriteIcon = isFavorite() ? "heart-fill" : "heart";
@@ -44,7 +58,8 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
             <Heading>Ingredientes</Heading>
           </HStack>
           <HStack>
-            <Text>
+            <Text
+            fontSize={"$lg"}>
               {recipe.ingredients
                 .map((ingredient) => ingredient.strIngredient)
                 .join("\n")}
@@ -64,12 +79,9 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
             </Badge>
           </HStack>
           <HStack>
-            <Button>
-              <ButtonText>Agregar a favoritos</ButtonText>
+            <Button onPress={onPressFavorite}>
+              <ButtonText>{isFavorite() ? "Quitar de favoritos" : "Agregar a favoritos"}</ButtonText>
             </Button>
-            {/* <Button onPress={onPressFavorite}>
-              <Icon as={AddIcon} m="$2" w="$4" h="$4" />
-            </Button> */}
           </HStack>
         </VStack>
       </Center>
