@@ -33,6 +33,7 @@ import ImageHeading from "../components/ImageHeading";
 import { ChevronDownIcon } from "@gluestack-ui/themed-native-base";
 import { useDispatch } from "react-redux";
 import { createUser } from "../src/lib/Api/features/userSlice";
+import { HStack } from "@gluestack-ui/themed";
 
 export default function Register() {
 
@@ -181,12 +182,15 @@ export default function Register() {
             </SelectPortal>
           </Select>
           </FormControl>
-          <FormControl>
-            <Button_lg name="Registrarse" function={handleRegisterUser} />
-            <Button_lg name="Cancelar" function={handleCancel} />
-          </FormControl>
+          
+          <HStack justifyContent="center">
+              <Button_lg name="Registrarse" function={handleRegisterUser} style={{ marginRight: 8 }} />
+              <Button_lg name="Cancelar" function={handleCancel} />
+            </HStack>
+    
         </Center>
       </View>
     </ScrollView>
   );
 }
+//

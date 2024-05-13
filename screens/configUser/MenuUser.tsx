@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text} from 'react-native';
 import ImageHeading from '../../components/ImageHeading';
 
-import IMAGE from '../../assets/resource/misdatos.jpg';
+import IMAGE from '../../assets/resource/configuracion2.png';
+
 import Button_lg from '../../components/Button_lg';
 import { useNavigation } from '@react-navigation/native';
 import { Heading } from '@gluestack-ui/themed';
@@ -22,12 +23,12 @@ const MenuUser = () => {
 
   return (
     <View>
-      <ImageHeading img={IMAGE} alt={"Datos de usuario"} />
+      <ImageHeading style={{ width: 50, height: 50 }} img={IMAGE} alt={"Datos de usuario"} />
+      
       <Heading>Configuración</Heading>
       <Button_lg name={"Mis datos"} function={ () => navigation.navigate('UserInfo') } />
       <Heading>Favoritos</Heading>
       <Button_lg name={"Mis recetas favoritas"} function={ () => navigation.navigate('FavRecipes') } />
-      <Button_lg name={"Mis ejercicios favoritos"} function={ () => navigation.navigate('FavRecipes') } />
       {user.strRole === 'Admin' && (
           <>
             <Heading>Administración</Heading>
