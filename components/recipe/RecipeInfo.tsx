@@ -14,6 +14,9 @@ import React from "react";
 import { View } from "react-native";
 import { Recipe } from "../../src/lib/models/recipeModel";
 import { useDispatch, useSelector } from "react-redux";
+import { Text as GlueText, FlatList } from 'gluestack-ui';
+
+
 // import { AddIcon } from "@gluestack-ui/icons";
 
 const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
@@ -37,34 +40,37 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
     <View>
       <Center>
         <VStack>
-          <HStack>
-            <Heading>{recipe.strNameFood}</Heading>
+          <HStack marginBottom="$4">
+            <Heading fontSize={"$3xl"}>{recipe.strNameFood}</Heading>
           </HStack>
-          <HStack>
+          <HStack justifyContent="center">
             <Heading>Ingredientes</Heading>
           </HStack>
-          <HStack>
-            <Text>
+          <HStack marginBottom="$4">
+
+            <Text 
+              fontSize={"$lg"}>
               {recipe.ingredients
                 .map((ingredient) => ingredient.strIngredient)
                 .join("\n")}
             </Text>
+            
           </HStack>
-          <HStack>
+          <HStack justifyContent="center">
             <Heading>Preparación</Heading>
           </HStack>
-          <HStack>
-            <Text>
+          <HStack marginBottom="$4">
+            <Text fontSize={"$lg"}>
               {recipe.preparation.map((step) => step.strPreparation).join("\n")}
             </Text>
           </HStack>
-          <HStack>
-            <Badge>
-              <BadgeText>{recipe.numKcal + " kcal"}</BadgeText>
+          <HStack justifyContent="center" marginBottom="$4">
+            <Badge >
+              <BadgeText fontSize={"$xl"}>{recipe.numKcal + " kcal"}</BadgeText>
             </Badge>
           </HStack>
-          <HStack>
-            <Button>
+          <HStack justifyContent="center">
+            <Button marginBottom="$3">
               <ButtonText>Agregar a favoritos</ButtonText>
             </Button>
             {/* <Button onPress={onPressFavorite}>

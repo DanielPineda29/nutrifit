@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { VStack } from '@gluestack-ui/themed';
+import { ScrollView, VStack } from '@gluestack-ui/themed';
 import ImageHeading from '../../components/ImageHeading';
 import RecipeInfo from '../../components/recipe/RecipeInfo';
 import Imagen from '../../assets/resource/logo.jpg';
@@ -54,7 +54,8 @@ const RecipesInfo = () => {
   };
 
   return (
-    <VStack>
+    <ScrollView> 
+      <VStack>
       <ImageHeading img={Imagen} alt={"Imagen"} />
       {recipe && (
         <RecipeInfo
@@ -63,6 +64,7 @@ const RecipesInfo = () => {
       )}
       <Button_lg name="Regresar" function={handleReturn} />
     </VStack>
+    </ScrollView>
   );
 };
 
