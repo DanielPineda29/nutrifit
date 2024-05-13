@@ -44,6 +44,14 @@ export const userSlice = createSlice({
             builder.addCase(getUser.rejected, (state) => {
                 state.userResponse = 400;
             });
+        //POST FAV RECIPE =>
+            builder.addCase(postFavRecipe.fulfilled, (state, action) => {
+                state.userResponse = 200;
+                state.user = action.payload || initialState.user;
+            });
+            builder.addCase(postFavRecipe.rejected, (state) => {
+                state.userResponse = 400;
+            });
         //EDIT USER =>
             builder.addCase(updateUser.fulfilled, (state, action) => {
             state.userResponse = 200;
@@ -58,6 +66,14 @@ export const userSlice = createSlice({
                 state.user = action.payload || initialState.user;
             });
             builder.addCase(deleteUser.rejected, (state) => {
+                state.userResponse = 400;
+            })
+        //DELETE FAV RECIPE =>
+            builder.addCase(deleteFavRecipe.fulfilled, (state, action) => {
+                state.userResponse = 200;
+                state.user = action.payload || initialState.user;
+            });
+            builder.addCase(deleteFavRecipe.rejected, (state) => {
                 state.userResponse = 400;
             })
     },
@@ -126,6 +142,22 @@ export const createUser = createAsyncThunk(
     }
 );
 
+export const postFavRecipe = createAsyncThunk(
+    'user/postFavRecipe',
+    async ({idUser, payload: User}:{idUser:string, payload: User}) => {
+        try {
+            const response = await Api.post(`/addFavRecipe/${idUser}`, User, {
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al añadir la receta favorita: ' + error);
+        }
+    }
+);
+
 export const updateUser = createAsyncThunk(
     'user/updateUser',
     async ({id, payload: User}:{id: String, payload: User}) => {
@@ -173,7 +205,22 @@ export const deleteUser = createAsyncThunk(
             console.log("Enviando datos desde deleteUser: ", response.data);
             return response.data;
         } catch (error) {
-            throw new Error('Error al actualizar el correo o contraseña: ' + error);
+            throw new Error('Error al eliminar el usuario: ' + error);
+        }
+    }
+);
+
+export const deleteFavRecipe = createAsyncThunk(
+    'user/deleteFavRecipe',
+    async ({idUser, idRecipe}:{idUser:string, idRecipe:string}) => {
+        console.log("idUser: ", idUser);
+        console.log("idRecipe: ", idRecipe);
+        try {
+            const response = await Api.delete(`/deleteFavRecipe/${idUser}/${idRecipe}`);
+            console.log("Enviando datos desde deleteFavRecipe: ", response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al borrar la receta en ')
         }
     }
 );
