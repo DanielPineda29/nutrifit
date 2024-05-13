@@ -37,7 +37,6 @@ const MenuUser = () => {
           <>
             <Heading>Administración</Heading>
             <Button_lg name={"Administrar recetas"} function={ () => navigation.navigate('ManageRecipes') } />
-            <Button_lg name={"Administrar usuarios"} function={ () => navigation.navigate('FavRecipes') } />
           </>
         )}
       <Button_lg name={"Cerrar sesión"} function={ handleLogout } />

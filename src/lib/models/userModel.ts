@@ -11,19 +11,15 @@ export interface User {
     strActivity: string;
     strRole: string;
     numDailyCalories: number;
+    numCaloriesConsumed: number;
     favRecipes: [];
-    favExcercises: [];
 }
 
 export interface FavRecipes {
     _id: string;
-    flagActivated: boolean;
+    flagIcon: boolean;
 }
 
-export interface FavExercises {
-    _id: string;
-    flagActivated: boolean;
-}
 
 export const listSexo = [
     {label: 'Masculino', value: 'Masculino'},

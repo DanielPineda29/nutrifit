@@ -9,6 +9,7 @@ import { getRecipe, resetRecipe } from '../../src/lib/Api/features/recipesSlice'
 import { Recipe } from '../../src/lib/models/recipeModel';
 import { useDispatch, useSelector } from 'react-redux';
 import Button_lg from '../../components/Button_lg';
+import ImageRecipe from '../../components/recipe/ImageRecipe';
 
 const RecipesInfo = () => {
 
@@ -26,7 +27,7 @@ const RecipesInfo = () => {
   return (
     <ScrollView> 
       <VStack>
-      <ImageHeading img={Imagen} alt={"Imagen"} />
+      <ImageRecipe img={recipe.image} alt={"Imagen"} />
       {recipe && (
         <RecipeInfo
           key={recipe._id}

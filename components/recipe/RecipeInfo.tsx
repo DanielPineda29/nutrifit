@@ -14,7 +14,7 @@ import React from "react";
 import { View } from "react-native";
 import { Recipe } from "../../src/lib/models/recipeModel";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFavRecipe, getUser, postFavRecipe } from "../../src/lib/Api/features/userSlice";
+import { deleteFavRecipe, getUser, postFavRecipe, updateUser } from "../../src/lib/Api/features/userSlice";
 
 const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
   const dispatch = useDispatch();
@@ -42,6 +42,13 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
       dispatch(postFavRecipe({ idUser: user._id, payload: { _id: recipe._id } }));
       dispatch(getUser(user.strEmail));
     }
+  };
+
+  const onPressCaloriesConsumed = () => {
+    const newCaloriesConsumed = user.numCaloriesConsumed + recipe.numKcal;
+    const updatedUser = { ...user, numCaloriesConsumed: newCaloriesConsumed };
+    dispatch(updateUser({ id: idUser, payload: updatedUser }));
+    dispatch(getUser(user.strEmail));
   };
 
   const favoriteIcon = isFavorite() ? "heart-fill" : "heart";
@@ -82,6 +89,11 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
           <HStack justifyContent="center">
             <Button onPress={onPressFavorite} marginBottom="$3">
               <ButtonText>{isFavorite() ? "Quitar de favoritos" : "Agregar a favoritos"}</ButtonText>
+            </Button>
+          </HStack>
+          <HStack justifyContent="center">
+            <Button onPress={onPressCaloriesConsumed} marginBottom="$3">
+              <ButtonText>Agregar a mi consumo</ButtonText>
             </Button>
           </HStack>
         </VStack>

@@ -20,7 +20,7 @@ const RecipeList = (props: any) => {
     <Card p="$6" borderRadius={"$lg"} maxWidth={460} m={"$3"} backgroundColor={"#ADD8E6"}>
       <HStack>
         <VStack>
-          <Image size="xl" source={props.img} alt={props.alt} borderRadius="$3xl" />
+          <Image size="xl" source={{uri: props.img}} alt={props.alt} borderRadius="$3xl" />
         </VStack>
         <VStack>
           <Box w={200}>

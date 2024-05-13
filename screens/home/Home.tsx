@@ -18,7 +18,8 @@ import {
 } from "@gluestack-ui/themed";
 
 import React, { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser, updateUser } from "../../src/lib/Api/features/userSlice";
 
 const reset = () => {
   console.log("reset");
@@ -29,6 +30,17 @@ const reset = () => {
 const Home = () => {
 
   const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  const resetCaloriesConsumed = async () => {
+    try {
+      const updatedUser = { ...user, numCaloriesConsumed: 0 };
+      dispatch(updateUser({ id: user._id, payload: updatedUser }));
+      dispatch(getUser(user.strEmail));
+    } catch (error) {
+      console.error("Error al reiniciar las calorías:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,13 +96,11 @@ const Home = () => {
                     <Heading fontSize={"$2xl"}>Kcal consumidas</Heading>
                   </HStack>
                   <HStack alignSelf="center" margin={"$5"}>
-                    <Text fontSize={"$2xl"}>1290 de {user.numDailyCalories}</Text>
+                    <Text fontSize={"$2xl"}>{user.numCaloriesConsumed} de {user.numDailyCalories}</Text>
                   </HStack>
                   <Button_lg
                     name="Reiniciar"
-                    function={() => {
-                      console.log("Reiniciar");
-                    }}
+                    function={resetCaloriesConsumed}
                   />
                 </VStack>
               </VStack>
