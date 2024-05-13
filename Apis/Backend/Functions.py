@@ -56,6 +56,7 @@ def fnRegisterUser(data):
         data["numHeight"] = int(data["numHeight"])
         data["numWeight"] = int(data["numWeight"])
         daily_calories = calculate_daily_calories(data)
+        calories_consumed = int(data['numCaloriesConsumed'])
         objCreateUser = dbConnectUsers.insert_one({
             "strEmail": data["strEmail"],
             "strPassword": hashed_password,
@@ -68,8 +69,8 @@ def fnRegisterUser(data):
             "strActivity": data["strActivity"],
             "strRole": data["strRole"],
             "numDailyCalories": daily_calories,
+            "numCaloriesConsumed": calories_consumed,
             "favRecipes":[],
-            "favExcercises": [],
             })
         objResponse = ResponseMessages.succ200.copy()
         return objResponse
@@ -88,6 +89,7 @@ def fnPostRecipe(data):
             "preparation": data["preparation"],
             "numKcal": data["numKcal"],
             "strTime": data["strTime"],
+            "image": data["image"]
         })
         objCreateRecipe = ResponseMessages.succ200.copy()
         return objCreateRecipe
@@ -206,6 +208,7 @@ def fnUpdateUser(objIDParameter, data):
         data["numAge"] = int(data["numAge"])
         data["numHeight"] = int(data["numHeight"])
         data["numWeight"] = int(data["numWeight"])
+        data["numCaloriesConsumed"] = int(data["numCaloriesConsumed"])
         daily_calories = calculate_daily_calories(data)
         objUpdateUser = dbConnectUsers.update_one({"_id":ObjectId(objIDParameter)},
                                                    {"$set":{
@@ -218,6 +221,7 @@ def fnUpdateUser(objIDParameter, data):
                                                         "strActivity": data["strActivity"],
                                                         "strRole": data["strRole"],
                                                         "numDailyCalories": daily_calories,
+                                                        "numCaloriesConsumed": data["numCaloriesConsumed"]
                                                         }})
         objResponse = ResponseMessages.succ200.copy()
         return objResponse

@@ -79,7 +79,7 @@ const RecipesList = () => {
           <Box  w={390}>
           <RecipeList
               key={item._id}
-              img={Breakfast}
+              img={item.image}
               alt={"Nombre comida"}
               strNameFood={item.strNameFood}
               numKcal={item.numKcal}
